@@ -1,4 +1,5 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import type { DotLottieReactProps } from "@lottiefiles/dotlottie-react";
 
 const DotLottieReact = lazy(() =>
@@ -17,6 +18,18 @@ interface LottiePlayerProps {
   label?: string;
   className?: string;
   loop?: boolean;
+}
+
+class LottieErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
 }
 
 export function LottiePlayer({
@@ -125,16 +138,18 @@ export function LottiePlayer({
       style={{ aspectRatio: "1 / 1", width: "100%" }}
       {...accessibilityProps}
     >
-      <Suspense fallback={null}>
-        <DotLottieReact
-          src={src}
-          loop={loop}
-          autoplay={false}
-          dotLottieRefCallback={handlePlayerRef}
-          onError={handleFailure}
-          style={{ display: failed ? "none" : "block", height: "100%", width: "100%" }}
-        />
-      </Suspense>
+      <LottieErrorBoundary>
+        <Suspense fallback={null}>
+          <DotLottieReact
+            src={src}
+            loop={loop}
+            autoplay={false}
+            dotLottieRefCallback={handlePlayerRef}
+            onError={handleFailure}
+            style={{ display: failed ? "none" : "block", height: "100%", width: "100%" }}
+          />
+        </Suspense>
+      </LottieErrorBoundary>
     </div>
   );
 }

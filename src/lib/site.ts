@@ -3,8 +3,12 @@ export type RoutePath = "/" | "/birthday" | "/birthday/privacy" | "/birthday/sup
 const githubProjectPrefix =
   window.location.hostname.endsWith("github.io") ? "/fujisys-site" : "";
 
-function publicPath(path: RoutePath): string {
+function publicPath(path: string): string {
   return `${githubProjectPrefix}${path}`;
+}
+
+export function assetPath(path: `/birthday/${string}`): string {
+  return publicPath(path);
 }
 
 export const SITE = {
