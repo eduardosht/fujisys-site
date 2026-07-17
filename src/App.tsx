@@ -48,7 +48,7 @@ function BirthdayPage() {
     </section>
     <Reveal><section className="birthday-statement section"><p className="section-index">Por que Birthday</p><h2>Lembrar também é uma forma de cuidar.</h2><p>O Birthday reúne o essencial em uma experiência tranquila, para que as datas que importam estejam sempre ao seu alcance.</p></section></Reveal>
     <section className="benefit-grid section" aria-label="Benefícios do Birthday">
-      <Reveal className="benefit-reveal"><article className="benefit-with-lottie"><LottiePlayer className="notification-lottie" src={assetPath("/birthday/lotties/notification.lottie")} label="Lembretes de datas importantes" /><span className="benefit-icon">01</span><h2>Tudo em um só lugar</h2><p>Organize datas importantes sem complicação e encontre o que precisa com facilidade.</p></article></Reveal>
+      <Reveal className="benefit-reveal"><article><span className="benefit-icon">01</span><h2>Tudo em um só lugar</h2><p>Organize datas importantes sem complicação e encontre o que precisa com facilidade.</p></article></Reveal>
       <Reveal className="benefit-reveal" delay={120}><article><span className="benefit-icon">02</span><h2>Acesso simples</h2><p>Entre com sua conta usando seu e-mail e mantenha seu acesso de forma prática.</p></article></Reveal>
       <Reveal className="benefit-reveal" delay={240}><article><span className="benefit-icon">03</span><h2>Feito com cuidado</h2><p>Uma experiência leve, clara e pensada para acompanhar momentos que merecem atenção.</p></article></Reveal>
     </section>
@@ -57,7 +57,7 @@ function BirthdayPage() {
 }
 
 function PrivacyPage() {
-  return <div className="privacy-page"><LegalLayout eyebrow="Birthday · Documento oficial" title="Política de Privacidade" intro="Transparência e cuidado também fazem parte da experiência Birthday." decoration={<LottiePlayer className="privacy-leaf" src={assetPath("/birthday/lotties/leaf.lottie")} />}>
+  return <div className="privacy-page"><LegalLayout eyebrow="Birthday · Documento oficial" title="Política de Privacidade" intro="Transparência e cuidado também fazem parte da experiência Birthday.">
     <p className="updated">Última atualização: 16 de julho de 2026</p>
     <section><h2>1. Sobre esta política</h2><p>A Fuji Sys é responsável pelo aplicativo Birthday. Esta política explica, em linguagem clara, qual dado pessoal utilizamos, por que ele é necessário e quais escolhas você tem.</p></section>
     <section><h2>2. Dado pessoal coletado</h2><p>O <strong>único dado pessoal coletado pelo Birthday é o seu endereço de e-mail</strong>. Não coletamos outros dados pessoais para o funcionamento da conta.</p></section>
