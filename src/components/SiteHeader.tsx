@@ -9,7 +9,7 @@ export function SiteHeader() {
         <nav aria-label="Navegação principal">
           <a href={`${SITE.routes.home}#empresa`}>Empresa</a>
           <a href={`${SITE.routes.home}#produtos`}>Produtos</a>
-          <a href={SITE.routes.birthday}>Birthday</a>
+          <a href={SITE.routes.birthday}>Birthly</a>
           <a href={`${SITE.routes.home}#contato`}>Contato</a>
         </nav>
       </header>

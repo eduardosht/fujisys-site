@@ -1,4 +1,4 @@
-export type RoutePath = "/" | "/birthday" | "/birthday/privacy" | "/birthday/support";
+export type RoutePath = "/" | "/birthly" | "/birthly/privacy" | "/birthly/support";
 
 const githubProjectPrefix =
   window.location.hostname.endsWith("github.io") ? "/fujisys-site" : "";
@@ -16,15 +16,15 @@ export const SITE = {
   email: "contato@fujisys.com.br",
   routes: {
     home: publicPath("/"),
-    birthday: publicPath("/birthday"),
-    privacy: publicPath("/birthday/privacy"),
-    support: publicPath("/birthday/support"),
+    birthday: publicPath("/birthly"),
+    privacy: publicPath("/birthly/privacy"),
+    support: publicPath("/birthly/support"),
   },
 } as const;
 
 export const PRODUCTS = [
   {
-    name: "Birthday",
+    name: "Birthly",
     eyebrow: "Lembrar também é cuidar.",
     description: "Um jeito simples e cuidadoso de manter datas importantes por perto.",
     href: SITE.routes.birthday,
@@ -38,7 +38,7 @@ export function getRoute(pathname: string): RoutePath | null {
   const normalized = withoutProjectPrefix.length > 1
     ? withoutProjectPrefix.replace(/\/+$/, "")
     : withoutProjectPrefix;
-  return (["/", "/birthday", "/birthday/privacy", "/birthday/support"] as RoutePath[]).includes(normalized as RoutePath)
+  return (["/", "/birthly", "/birthly/privacy", "/birthly/support"] as RoutePath[]).includes(normalized as RoutePath)
     ? normalized as RoutePath
     : null;
 }
