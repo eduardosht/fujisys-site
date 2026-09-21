@@ -4,13 +4,14 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "test:static": "node scripts/verify-static-output.mjs"
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.19.6",
+    "next": "^16.3.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -18,8 +19,6 @@
     "@types/node": "^26.1.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
-    "@vitejs/plugin-react": "^6.0.0",
-    "typescript": "^7.0.0",
-    "vite": "^8.1.0"
+    "typescript": "^7.0.0"
   }
 }
