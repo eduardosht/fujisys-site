@@ -1,3 +1,5 @@
+"use client";
+
 import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { DotLottieReactProps } from "@lottiefiles/dotlottie-react";

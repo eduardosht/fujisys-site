@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SITE } from "../lib/site";
 
 export function SiteHeader() {
@@ -5,12 +6,12 @@ export function SiteHeader() {
     <>
       <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
       <header className="site-header">
-        <a className="brand" href={SITE.routes.home}>{SITE.name}</a>
+        <Link className="brand" href={SITE.routes.home}>{SITE.name}</Link>
         <nav aria-label="Navegação principal">
-          <a href={`${SITE.routes.home}#empresa`}>Empresa</a>
-          <a href={`${SITE.routes.home}#produtos`}>Produtos</a>
-          <a href={SITE.routes.birthday}>Birthly</a>
-          <a href={`${SITE.routes.home}#contato`}>Contato</a>
+          <Link href="/#empresa">Empresa</Link>
+          <Link href="/#produtos">Produtos</Link>
+          <Link href={SITE.routes.birthday}>Birthly</Link>
+          <Link href="/#contato">Contato</Link>
         </nav>
       </header>
     </>

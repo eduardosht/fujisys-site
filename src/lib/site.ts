@@ -1,24 +1,19 @@
 export type RoutePath = "/" | "/birthly" | "/birthly/privacy" | "/birthly/support";
 
-const githubProjectPrefix =
-  window.location.hostname.endsWith("github.io") ? "/fujisys-site" : "";
-
-function publicPath(path: string): string {
-  return `${githubProjectPrefix}${path}`;
-}
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export function assetPath(path: `/birthday/${string}`): string {
-  return publicPath(path);
+  return `${basePath}${path}`;
 }
 
 export const SITE = {
   name: "Fuji Sys",
   email: "contato@fujisys.com.br",
   routes: {
-    home: publicPath("/"),
-    birthday: publicPath("/birthly"),
-    privacy: publicPath("/birthly/privacy"),
-    support: publicPath("/birthly/support"),
+    home: "/",
+    birthday: "/birthly",
+    privacy: "/birthly/privacy",
+    support: "/birthly/support",
   },
 } as const;
 
@@ -32,13 +27,10 @@ export const PRODUCTS = [
 ] as const;
 
 export function getRoute(pathname: string): RoutePath | null {
-  const withoutProjectPrefix = githubProjectPrefix && pathname.startsWith(githubProjectPrefix)
-    ? pathname.slice(githubProjectPrefix.length) || "/"
-    : pathname;
-  const normalized = withoutProjectPrefix.length > 1
-    ? withoutProjectPrefix.replace(/\/+$/, "")
-    : withoutProjectPrefix;
-  return (["/", "/birthly", "/birthly/privacy", "/birthly/support"] as RoutePath[]).includes(normalized as RoutePath)
+  const normalized = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+  return (["/", "/birthly", "/birthly/privacy", "/birthly/support"] as RoutePath[]).includes(
+    normalized as RoutePath,
+  )
     ? normalized as RoutePath
     : null;
 }
