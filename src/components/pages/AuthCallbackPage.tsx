@@ -20,28 +20,28 @@ function isHttpsUrl(value: string): boolean {
 
 function SupportLink() {
   return (
-    <a href={`mailto:${SITE.email}?subject=Suporte%20Birthly`}>
+    <a
+      className="auth-callback-external-link"
+      href={`mailto:${SITE.email}?subject=Suporte%20Birthly`}
+    >
       {SITE.email}
     </a>
   );
 }
 
-function ExternalDownloads() {
-  const links = [
-    { href: SITE.downloads.appStore, label: "Baixar na App Store" },
-    { href: SITE.downloads.googlePlay, label: "Baixar no Google Play" },
-  ].filter(({ href }) => isHttpsUrl(href));
+function AppStoreDownload() {
+  const href = SITE.downloads.appStore;
 
-  if (links.length === 0) return null;
+  if (!isHttpsUrl(href)) return null;
 
   return (
-    <nav className="auth-callback-external-links" aria-label="Downloads do Birthly">
-      {links.map(({ href, label }) => (
-        <a className="text-link" href={href} key={href} rel="noreferrer">
-          {label}
-        </a>
-      ))}
-    </nav>
+    <a
+      className="auth-callback-external-link text-link"
+      href={href}
+      rel="noreferrer"
+    >
+      Baixar na App Store
+    </a>
   );
 }
 
@@ -75,60 +75,64 @@ export default function AuthCallbackPage() {
           <span className="auth-callback-status-icon" aria-hidden="true">
             {status === "success" ? "✓" : status === "error" ? "!" : "•"}
           </span>
-          <p className="auth-callback-status-text eyebrow">Birthly · confirmação</p>
+          <div className="auth-callback-status-copy">
+            <p className="auth-callback-status-text eyebrow">Birthly · confirmação</p>
+            <h1 id="auth-callback-title">{title}</h1>
+
+            {status === null && (
+              <p className="lede">Verificando o link de confirmação...</p>
+            )}
+
+            {status === "success" && (
+              <p className="lede">
+                Sua conta está pronta. Volte ao Birthly para continuar.
+              </p>
+            )}
+
+            {(status === "error" || status === "direct") && (
+              <p className="lede">{message}</p>
+            )}
+          </div>
         </div>
 
-        <h1 id="auth-callback-title">{title}</h1>
-
-        {status === null && (
-          <p className="lede">Verificando o link de confirmação...</p>
-        )}
-
         {status === "success" && (
-          <>
-            <p className="lede">
-              Sua conta está pronta. Volte ao Birthly para continuar.
-            </p>
-            <div className="auth-callback-actions">
-              {mobileUrl && (
-                <a className="button coral-button" href={mobileUrl} rel="noreferrer">
-                  Abrir no Birthly
-                </a>
-              )}
-              <ExternalDownloads />
-            </div>
-          </>
+          <div className="auth-callback-actions">
+            {mobileUrl && (
+              <a
+                className="auth-callback-external-link button coral-button"
+                href={mobileUrl}
+                rel="noreferrer"
+              >
+                Abrir no Birthly
+              </a>
+            )}
+            <AppStoreDownload />
+          </div>
         )}
 
         {status === "error" && (
-          <>
-            <p className="lede">{message}</p>
-            <div className="auth-callback-actions">
-              <a className="button" href={SITE.routes.home}>
-                Voltar ao site
-              </a>
-              <p className="auth-callback-support">
-                Precisa de ajuda? <SupportLink />
-              </p>
-            </div>
-          </>
+          <div className="auth-callback-actions">
+            <a className="button" href={SITE.routes.home}>
+              Voltar ao site
+            </a>
+            <p className="auth-callback-support">
+              Precisa de ajuda? <SupportLink />
+            </p>
+          </div>
         )}
 
         {status === "direct" && (
-          <>
-            <p className="lede">{message}</p>
-            <div className="auth-callback-actions">
-              <a className="button" href={SITE.routes.home}>
-                Ir para o site
-              </a>
-              <a className="text-link" href={SITE.routes.support}>
-                Ver suporte
-              </a>
-              <p className="auth-callback-support">
-                Fale com a gente: <SupportLink />
-              </p>
-            </div>
-          </>
+          <div className="auth-callback-actions">
+            <a className="button" href={SITE.routes.home}>
+              Ir para o site
+            </a>
+            <a className="text-link" href={SITE.routes.support}>
+              Ver suporte
+            </a>
+            <p className="auth-callback-support">
+              Fale com a gente: <SupportLink />
+            </p>
+          </div>
         )}
       </div>
     </section>
