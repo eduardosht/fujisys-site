@@ -5,7 +5,7 @@
         "appIDs": ["F55K44C6JY.com.edufuji.birthday"],
         "components": [
           {"/": "/auth/callback"},
-          {"/": "/auth/callback/*"}
+          {"/": "/auth/callback/"}
         ]
       }
     ]
