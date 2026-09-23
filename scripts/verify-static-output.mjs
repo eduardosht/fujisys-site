@@ -46,6 +46,7 @@ const callbackHtml = `${readFileSync(
 assert.match(callbackHtml, /E-mail confirmado com sucesso/);
 assert.match(callbackHtml, /birthday:\/\/signup-confirmation/);
 assert.match(callbackHtml, /history\.replaceState/);
+assert.match(callbackSource, /history\.replaceState/);
 assert.doesNotMatch(callbackSource, /exchangeCodeForSession|setSession/);
 assert.doesNotMatch(callbackHtml, /exchangeCodeForSession|setSession/);
 assert.doesNotMatch(callbackHtml, /(?:example\.com|fake|placeholder)/i);
@@ -69,8 +70,17 @@ assert.deepEqual(
 if (process.env.REQUIRE_BIRTHLY_DOWNLOAD_LINKS === "1") {
   const name = "NEXT_PUBLIC_BIRTHLY_APP_STORE_URL";
   const value = process.env[name];
+  let isOfficialAppStoreUrl = false;
 
-  if (!value || new URL(value).protocol !== "https:") {
+  try {
+    const url = new URL(value ?? "");
+    isOfficialAppStoreUrl =
+      url.protocol === "https:" && url.hostname === "apps.apple.com";
+  } catch {
+    isOfficialAppStoreUrl = false;
+  }
+
+  if (!isOfficialAppStoreUrl) {
     throw new Error(`${name} must be an official HTTPS store URL`);
   }
 }
