@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test:static": "node scripts/verify-static-output.mjs"
+    "test:static": "node scripts/verify-static-output.mjs",
+    "test:auth-callback": "node --experimental-strip-types scripts/verify-auth-callback.mjs"
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.19.6",
