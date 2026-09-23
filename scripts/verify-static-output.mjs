@@ -2,6 +2,14 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const outputDir = join(process.cwd(), "out");
+const packageJson = JSON.parse(
+  readFileSync(join(process.cwd(), "package.json"), "utf8"),
+);
+
+if (packageJson.scripts?.start === "next start") {
+  throw new Error('The "next start" script is incompatible with static export.');
+}
+
 const expectedFiles = [
   "index.html",
   "birthly/index.html",

@@ -25,12 +25,3 @@ export const PRODUCTS = [
     href: SITE.routes.birthday,
   },
 ] as const;
-
-export function getRoute(pathname: string): RoutePath | null {
-  const normalized = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
-  return (["/", "/birthly", "/birthly/privacy", "/birthly/support"] as RoutePath[]).includes(
-    normalized as RoutePath,
-  )
-    ? normalized as RoutePath
-    : null;
-}
