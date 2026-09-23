@@ -1,4 +1,11 @@
-export type RoutePath = "/" | "/birthly" | "/birthly/privacy" | "/birthly/support";
+const envUrl = (value: string | undefined): string => value ?? "";
+
+export type RoutePath =
+  | "/"
+  | "/birthly"
+  | "/birthly/privacy"
+  | "/birthly/support"
+  | "/auth/callback/";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -14,6 +21,11 @@ export const SITE = {
     birthday: "/birthly",
     privacy: "/birthly/privacy",
     support: "/birthly/support",
+    authCallback: "/auth/callback/",
+  },
+  downloads: {
+    appStore: envUrl(process.env.NEXT_PUBLIC_BIRTHLY_APP_STORE_URL),
+    googlePlay: envUrl(process.env.NEXT_PUBLIC_BIRTHLY_GOOGLE_PLAY_URL),
   },
 } as const;
 
