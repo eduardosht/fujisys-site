@@ -137,11 +137,9 @@ Run: `git push origin main`
 
 Expected: `main` atualizada no repositório público.
 
-- [ ] **Step 4: Acompanhar Pages**
+- [ ] **Step 4: Acompanhar o deploy**
 
-Run: `gh run list --repo eduardosht/fujisys-site --workflow deploy-pages.yml --limit 1`
-
-Depois acompanhar o id retornado com `gh run watch <id> --repo eduardosht/fujisys-site --exit-status`.
+Verificar o resultado do deploy na plataforma de hospedagem configurada.
 
 Expected: build e deploy concluídos com sucesso.
 
