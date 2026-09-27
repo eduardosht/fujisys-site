@@ -1,0 +1,106 @@
+.section {
+  min-height: min(780px, 72vh);
+  display: grid;
+  place-items: center;
+  padding: clamp(3.5rem, 8vw, 7rem) 0;
+}
+
+.card {
+  width: min(100%, 680px);
+  padding: clamp(2rem, 6vw, 4.5rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(34, 26, 90, .08);
+}
+
+.symbol {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 2rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.card[data-status="success"] .symbol,
+.card[data-status="success"] .status { color: #17613c; }
+.card[data-status="error"] .symbol,
+.card[data-status="error"] .status { color: #a03c28; }
+.card[data-status="unknown"] .symbol,
+.card[data-status="unknown"] .status { color: #4937a8; }
+
+.eyebrow {
+  margin-bottom: 1.5rem;
+  color: var(--electric);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.status {
+  margin-bottom: .75rem;
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+.title {
+  max-width: 14ch;
+  margin-bottom: 1.5rem;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.03;
+}
+
+.detail {
+  max-width: 48ch;
+  margin-bottom: 2.5rem;
+  color: #45444c;
+  font-size: 1.12rem;
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.primary {
+  min-height: 3.3rem;
+  padding: .9rem 1.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--electric);
+  color: white;
+  font: inherit;
+  font-size: .95rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.secondary {
+  padding: .75rem .25rem;
+  font-size: .95rem;
+  font-weight: 800;
+}
+
+.primary:focus-visible,
+.secondary:focus-visible {
+  outline: 3px solid var(--electric);
+  outline-offset: 5px;
+}
+
+.primary:hover { background: var(--electric-dark); }
+
+@media (max-width: 580px) {
+  .section { min-height: 65vh; }
+  .actions { flex-direction: column; align-items: stretch; }
+  .primary { width: 100%; }
+  .secondary { text-align: center; }
+}
