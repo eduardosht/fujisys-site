@@ -1,6 +1,7 @@
 import type { ConfirmationStatus } from './emailConfirmation.mjs';
 
 export const CONFIRMATION_RESULT_STORAGE_KEY: string;
+export function buildConfirmationFallbackUrl(basePath: string, fallbackPath: string, status: string): string;
 
 export interface ConfirmationBrowser {
   location: {

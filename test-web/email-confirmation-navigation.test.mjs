@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  buildConfirmationFallbackUrl,
   openBirthly,
   processConfirmationCallback,
 } from '../src/lib/emailConfirmationNavigation.mjs';
@@ -89,4 +90,17 @@ test('the CTA does nothing outside the confirmation route', () => {
 
   assert.equal(openBirthly(tab, 'success', callbackPath), null);
   assert.deepEqual(tab.events, []);
+});
+
+test('confirmation fallback uses the prefixed route and carries only a closed result and source', () => {
+  const url = buildConfirmationFallbackUrl('/preview', '/birthly/open-app/', 'success&code=private');
+  const target = new URL(url, 'https://example.com');
+
+  assert.equal(target.pathname, '/preview/birthly/open-app/');
+  assert.deepEqual([...target.searchParams.keys()].sort(), ['confirmation_result', 'source']);
+  assert.equal(target.searchParams.get('confirmation_result'), 'unknown');
+  assert.equal(target.searchParams.get('source'), 'email-confirmation');
+  assert.equal(url.includes('private'), false);
+  assert.equal(buildConfirmationFallbackUrl('/preview', '/birthly/open-app/', 'success'),
+    '/preview/birthly/open-app/?confirmation_result=success&source=email-confirmation');
 });

@@ -1,8 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { fileURLToPath } from 'node:url';
 
 import { CONFIRMATION_RESULT_STORAGE_KEY } from '../src/lib/emailConfirmationNavigation.mjs';
 import {
@@ -10,7 +7,9 @@ import {
   confirmationReturnPath,
   consumeFallbackResult,
   configuredStoreLinks,
+  openAppInstruction,
 } from '../src/lib/openAppNavigation.mjs';
+import { buildConfirmationFallbackUrl } from '../src/lib/emailConfirmationNavigation.mjs';
 
 function storage(initial) {
   const values = new Map(initial ? [[CONFIRMATION_RESULT_STORAGE_KEY, initial]] : []);
@@ -30,11 +29,22 @@ test('fallback consumes a saved closed result exactly once', () => {
   }
 });
 
+test('confirmation fallback carries its closed result through to the app link without storage', () => {
+  const fallbackUrl = buildConfirmationFallbackUrl('/preview', '/birthly/open-app/', 'success');
+  const result = consumeFallbackResult(storage(), new URL(fallbackUrl, 'https://example.com').search);
+  const appTarget = new URL(buildFallbackAppUrl(result));
+
+  assert.equal(appTarget.searchParams.get('confirmation_result'), 'success');
+  assert.deepEqual([...appTarget.searchParams.keys()].sort(), ['confirmation_result', 'source']);
+});
+
 test('forged or unavailable storage never claims a successful confirmation', () => {
   const forged = storage('success&code=private');
   assert.equal(consumeFallbackResult(forged), 'unknown');
   assert.equal(forged.values.size, 0);
   assert.equal(consumeFallbackResult({ getItem() { throw new Error('blocked'); }, removeItem() {} }), 'unknown');
+  assert.equal(consumeFallbackResult(storage(), '?source=email-confirmation&confirmation_result=success%26code%3Dprivate'), 'unknown');
+  assert.equal(consumeFallbackResult(storage(), '?confirmation_result=success'), 'unknown');
 });
 
 test('explicit app target contains only the closed result and fixed source marker', () => {
@@ -62,18 +72,10 @@ test('store links are absent until valid public HTTPS destinations are configure
   ]);
 });
 
-test('no-store page does not promise store links that are unavailable', () => {
-  const env = { ...process.env };
-  delete env.NEXT_PUBLIC_BIRTHLY_IOS_URL;
-  delete env.NEXT_PUBLIC_BIRTHLY_ANDROID_URL;
-  execFileSync('npm', ['run', 'build'], {
-    cwd: fileURLToPath(new URL('..', import.meta.url)),
-    env,
-    stdio: 'pipe',
-  });
-
-  const html = readFileSync(new URL('../out/birthly/open-app/index.html', import.meta.url), 'utf8');
-  const detail = html.match(/<p class="[^"]*detail">([^<]*)<\/p>/)?.[1];
-  assert.match(detail, /Toque no botão/);
+test('no-store instruction describes opening an installed app without promising installation', () => {
+  const detail = openAppInstruction([]);
+  assert.match(detail, /já tem o Birthly instalado/i);
+  assert.match(detail, /toque no botão/i);
   assert.doesNotMatch(detail, /links? de loja/i);
+  assert.doesNotMatch(detail, /voltar ao aplicativo/i);
 });

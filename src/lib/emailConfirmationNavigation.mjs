@@ -6,6 +6,12 @@ import {
 
 export const CONFIRMATION_RESULT_STORAGE_KEY = 'birthly:confirmation-result';
 
+export function buildConfirmationFallbackUrl(basePath, fallbackPath, status) {
+  const target = new URL(buildConfirmationResultUrl(`${basePath}${fallbackPath}`, status), 'https://birthly.invalid');
+  target.searchParams.set('source', 'email-confirmation');
+  return `${target.pathname}${target.search}`;
+}
+
 export function processConfirmationCallback(browser, expectedPath) {
   const { location, history } = browser;
   if (location.pathname !== expectedPath) return null;

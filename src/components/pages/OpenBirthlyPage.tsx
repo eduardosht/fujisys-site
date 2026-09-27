@@ -6,6 +6,7 @@ import {
   buildFallbackAppUrl,
   confirmationReturnPath,
   consumeFallbackResult,
+  openAppInstruction,
 } from "@/src/lib/openAppNavigation.mjs";
 import type { StoreLink } from "@/src/lib/openAppNavigation.mjs";
 import { SITE } from "@/src/lib/site";
@@ -20,8 +21,12 @@ export default function OpenBirthlyPage({ storeLinks }: { storeLinks: StoreLink[
   useEffect(() => {
     if (consumed.current) return;
     consumed.current = true;
+    const search = window.location.search;
+    if (search || window.location.hash) {
+      window.history.replaceState(window.history.state, "", window.location.pathname);
+    }
     try {
-      setStatus(consumeFallbackResult(window.sessionStorage));
+      setStatus(consumeFallbackResult(window.sessionStorage, search));
     } catch {
       // Storage can be unavailable; the neutral link is already rendered.
     }
@@ -33,8 +38,7 @@ export default function OpenBirthlyPage({ storeLinks }: { storeLinks: StoreLink[
         <p className={styles.eyebrow}>Birthly · Abrir aplicativo</p>
         <h1 id="open-app-title" className={styles.title}>Vamos abrir o Birthly?</h1>
         <p className={styles.detail}>
-          Toque no botão para voltar ao aplicativo.
-          {storeLinks.length > 0 && " Se ele ainda não estiver instalado, use um dos links de loja disponíveis abaixo."}
+          {openAppInstruction(storeLinks)}
         </p>
         <div className={styles.actions}>
           <a className={styles.primary} href={buildFallbackAppUrl(status)}>Abrir Birthly</a>

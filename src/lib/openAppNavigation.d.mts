@@ -10,7 +10,8 @@ export interface StoreLink {
   href: string;
 }
 
-export function consumeFallbackResult(storage: FallbackStorage): ConfirmationStatus;
+export function consumeFallbackResult(storage: FallbackStorage, search?: string): ConfirmationStatus;
 export function buildFallbackAppUrl(status: string): string;
 export function confirmationReturnPath(basePath: string, confirmationPath: string): string;
+export function openAppInstruction(storeLinks: StoreLink[]): string;
 export function configuredStoreLinks(iosUrl: string | undefined, androidUrl: string | undefined): StoreLink[];

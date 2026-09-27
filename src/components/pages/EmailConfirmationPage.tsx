@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { ConfirmationStatus } from "@/src/lib/emailConfirmation.mjs";
 import {
+  buildConfirmationFallbackUrl,
   openBirthly,
   processConfirmationCallback,
 } from "@/src/lib/emailConfirmationNavigation.mjs";
@@ -62,6 +63,13 @@ export default function EmailConfirmationPage() {
           >
             Abrir Birthly
           </button>
+          <a
+            className={styles.secondary}
+            href={buildConfirmationFallbackUrl(basePath, SITE.routes.openApp, status)}
+            onClick={() => processConfirmationCallback(window, callbackPath)}
+          >
+            Não abriu? Veja como abrir ou instalar
+          </a>
           <a
             className={styles.secondary}
             href={`${basePath}${SITE.routes.birthday}`}

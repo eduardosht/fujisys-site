@@ -19,6 +19,12 @@ Redirect URL permitida: https://fujisys.com.br/birthly/confirm-email/
 
 Usar a URL completa, com barra final, na lista de redirecionamentos permitidos. Evitar wildcard amplo em produção. Durante a transição, manter `birthday://signup-confirmation` permitido no Supabase e reconhecido pelo app para links e builds antigos. O botão de abrir o app no site também usa esse deep link. Retirar o redirect legado apenas após validar que não há mais versões dependentes dele; não presumir Universal Links ou App Links sem a configuração nativa correspondente.
 
+## Handoff para o app
+
+Depois de ler o retorno de `/birthly/confirm-email/`, o site remove query e fragmento da URL do navegador. O botão **Abrir Birthly** usa o esquema customizado `birthday://signup-confirmation?source=email-confirmation&confirmation_result=success|error|unknown` (a ordem dos parâmetros de query não é contratual). O link alternativo leva a `/birthly/open-app/` com apenas esses dois parâmetros e respeita o base path do site; nessa página, o botão de abrir o app usa o mesmo esquema customizado.
+
+`confirmation_result` é apenas um resultado indicativo para a interface, não uma prova de autenticação. Tokens e códigos recebidos no callback são descartados e não são enviados ao app. O site não cria uma sessão de autenticação no navegador. Ao receber o deep link, o app deve fazer sua própria verificação de autenticação/sessão antes de considerar o cadastro confirmado ou liberar conteúdo autenticado.
+
 ## Links opcionais das lojas
 
 Os links de instalação da página `/birthly/open-app/` são definidos no build do site, se houver destinos HTTPS públicos válidos:
