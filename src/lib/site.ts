@@ -1,4 +1,4 @@
-export type RoutePath = "/" | "/birthly" | "/birthly/privacy" | "/birthly/support" | "/birthly/confirm-email/";
+export type RoutePath = "/" | "/birthly" | "/birthly/privacy" | "/birthly/support" | "/birthly/confirm-email/" | "/birthly/open-app/";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -13,6 +13,7 @@ export const SITE = {
     home: "/",
     birthday: "/birthly",
     confirmEmail: "/birthly/confirm-email/",
+    openApp: "/birthly/open-app/",
     privacy: "/birthly/privacy",
     support: "/birthly/support",
   },

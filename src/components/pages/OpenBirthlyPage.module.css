@@ -1,0 +1,90 @@
+.section {
+  min-height: min(780px, 72vh);
+  display: grid;
+  place-items: center;
+  padding: clamp(3.5rem, 8vw, 7rem) 0;
+}
+
+.card {
+  width: min(100%, 680px);
+  padding: clamp(2rem, 6vw, 4.5rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(34, 26, 90, .08);
+}
+
+.eyebrow {
+  margin-bottom: 1.5rem;
+  color: var(--electric);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.title {
+  max-width: 14ch;
+  margin-bottom: 1.5rem;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.03;
+}
+
+.detail {
+  max-width: 48ch;
+  margin-bottom: 2.5rem;
+  color: #45444c;
+  font-size: 1.12rem;
+  line-height: 1.65;
+}
+
+.actions, .storeLinks {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.primary {
+  min-height: 3.3rem;
+  display: inline-flex;
+  align-items: center;
+  padding: .9rem 1.4rem;
+  border-radius: 999px;
+  background: var(--electric);
+  color: white;
+  font-size: .95rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.secondary, .storeLinks a {
+  padding: .75rem .25rem;
+  font-size: .95rem;
+  font-weight: 800;
+}
+
+.stores {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.stores p {
+  margin-bottom: .5rem;
+  color: var(--muted);
+}
+
+.primary:focus-visible, .secondary:focus-visible, .storeLinks a:focus-visible {
+  outline: 3px solid var(--electric);
+  outline-offset: 5px;
+}
+
+.primary:hover { background: var(--electric-dark); }
+
+@media (max-width: 580px) {
+  .section { min-height: 65vh; }
+  .actions { flex-direction: column; align-items: stretch; }
+  .primary { justify-content: center; }
+  .secondary { text-align: center; }
+}
