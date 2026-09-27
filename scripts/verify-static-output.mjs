@@ -15,6 +15,8 @@ const expectedFiles = [
   "birthly/index.html",
   "birthly/privacy/index.html",
   "birthly/support/index.html",
+  "birthly/confirm-email/index.html",
+  "birthly/open-app/index.html",
   "404.html",
 ];
 
@@ -31,6 +33,8 @@ const requiredTitles = {
   "birthly/index.html": "Birthly",
   "birthly/privacy/index.html": "Política de Privacidade",
   "birthly/support/index.html": "Suporte do Birthly",
+  "birthly/confirm-email/index.html": "Confirmação de e-mail do Birthly | Fuji Sys",
+  "birthly/open-app/index.html": "Abrir Birthly | Fuji Sys",
 };
 
 for (const [file, title] of Object.entries(requiredTitles)) {
