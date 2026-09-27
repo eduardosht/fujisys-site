@@ -33,7 +33,8 @@ export default function OpenBirthlyPage({ storeLinks }: { storeLinks: StoreLink[
         <p className={styles.eyebrow}>Birthly · Abrir aplicativo</p>
         <h1 id="open-app-title" className={styles.title}>Vamos abrir o Birthly?</h1>
         <p className={styles.detail}>
-          Toque no botão para voltar ao aplicativo. Se ele ainda não estiver instalado, use um dos links de loja disponíveis abaixo.
+          Toque no botão para voltar ao aplicativo.
+          {storeLinks.length > 0 && " Se ele ainda não estiver instalado, use um dos links de loja disponíveis abaixo."}
         </p>
         <div className={styles.actions}>
           <a className={styles.primary} href={buildFallbackAppUrl(status)}>Abrir Birthly</a>

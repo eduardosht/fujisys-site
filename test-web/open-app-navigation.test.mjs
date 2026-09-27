@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 
 import { CONFIRMATION_RESULT_STORAGE_KEY } from '../src/lib/emailConfirmationNavigation.mjs';
 import {
@@ -57,4 +60,20 @@ test('store links are absent until valid public HTTPS destinations are configure
     { label: 'App Store', href: 'https://apps.apple.com/app/birthly' },
     { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=birthly' },
   ]);
+});
+
+test('no-store page does not promise store links that are unavailable', () => {
+  const env = { ...process.env };
+  delete env.NEXT_PUBLIC_BIRTHLY_IOS_URL;
+  delete env.NEXT_PUBLIC_BIRTHLY_ANDROID_URL;
+  execFileSync('npm', ['run', 'build'], {
+    cwd: fileURLToPath(new URL('..', import.meta.url)),
+    env,
+    stdio: 'pipe',
+  });
+
+  const html = readFileSync(new URL('../out/birthly/open-app/index.html', import.meta.url), 'utf8');
+  const detail = html.match(/<p class="[^"]*detail">([^<]*)<\/p>/)?.[1];
+  assert.match(detail, /Toque no botão/);
+  assert.doesNotMatch(detail, /links? de loja/i);
 });
