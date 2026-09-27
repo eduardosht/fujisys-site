@@ -29,17 +29,17 @@ if (missingFiles.length > 0) {
 }
 
 const requiredTitles = {
-  "index.html": "Fuji Sys",
-  "birthly/index.html": "Birthly",
-  "birthly/privacy/index.html": "Política de Privacidade",
-  "birthly/support/index.html": "Suporte do Birthly",
+  "index.html": "Fuji Sys — Soluções digitais com propósito",
+  "birthly/index.html": "Birthly — Datas importantes por perto | Fuji Sys",
+  "birthly/privacy/index.html": "Política de Privacidade | Fuji Sys",
+  "birthly/support/index.html": "Suporte do Birthly | Fuji Sys",
   "birthly/confirm-email/index.html": "Confirmação de e-mail do Birthly | Fuji Sys",
   "birthly/open-app/index.html": "Abrir Birthly | Fuji Sys",
 };
 
 for (const [file, title] of Object.entries(requiredTitles)) {
   const html = readFileSync(join(outputDir, file), "utf8");
-  if (!html.includes(`<title>${title}`)) {
+  if (!html.includes(`<title>${title}</title>`)) {
     throw new Error(`Missing expected title in ${file}: ${title}`);
   }
 }

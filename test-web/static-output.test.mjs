@@ -8,10 +8,10 @@ import { fileURLToPath } from 'node:url';
 
 const verifier = fileURLToPath(new URL('../scripts/verify-static-output.mjs', import.meta.url));
 const titles = {
-  'index.html': 'Fuji Sys',
-  'birthly/index.html': 'Birthly',
-  'birthly/privacy/index.html': 'Política de Privacidade',
-  'birthly/support/index.html': 'Suporte do Birthly',
+  'index.html': 'Fuji Sys — Soluções digitais com propósito',
+  'birthly/index.html': 'Birthly — Datas importantes por perto | Fuji Sys',
+  'birthly/privacy/index.html': 'Política de Privacidade | Fuji Sys',
+  'birthly/support/index.html': 'Suporte do Birthly | Fuji Sys',
   'birthly/confirm-email/index.html': 'Confirmação de e-mail do Birthly | Fuji Sys',
   'birthly/open-app/index.html': 'Abrir Birthly | Fuji Sys',
 };
@@ -49,8 +49,16 @@ test('static verifier requires the exported route titles', () => {
   }
 });
 
+test('static verifier rejects a title with an extra suffix', () => {
+  for (const file of ['birthly/confirm-email/index.html', 'birthly/open-app/index.html']) {
+    const result = verifyFixture({ [file]: `${titles[file]} — unexpected` });
+    assert.notEqual(result.status, 0, file);
+    assert.match(result.stderr, new RegExp(`Missing expected title in ${file}:`));
+  }
+});
+
 test('static verifier accepts a complete export', () => {
   const result = verifyFixture();
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /Verified 7 static output files\./);
+  assert.equal(result.stdout, 'Verified 7 static output files.\n');
 });
