@@ -1,12 +1,13 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 const verifier = fileURLToPath(new URL('../scripts/verify-static-output.mjs', import.meta.url));
+const recoveryGuide = fileURLToPath(new URL('../docs/integrations/birthly-password-recovery.md', import.meta.url));
 const titles = {
   'index.html': 'Fuji Sys — Soluções digitais com propósito',
   'privacy/index.html': 'Política de Privacidade | Fuji Sys',
@@ -16,6 +17,7 @@ const titles = {
   'birthly/support/index.html': 'Suporte do Birthly | Fuji Sys',
   'auth/callback/index.html': 'Confirmar e-mail | Birthly',
   'birthly/confirm-email/index.html': 'Confirmação de e-mail do Birthly | Fuji Sys',
+  'birthly/reset-password/index.html': 'Redefinir senha do Birthly | Fuji Sys',
   'birthly/open-app/index.html': 'Abrir Birthly | Fuji Sys',
 };
 
@@ -48,12 +50,24 @@ function verifyFixture(changes = {}) {
   }
 }
 
-test('static verifier requires both Birthly confirmation route files', () => {
-  for (const file of ['birthly/confirm-email/index.html', 'birthly/open-app/index.html']) {
+test('static verifier requires all Birthly auth route files', () => {
+  for (const file of [
+    'birthly/confirm-email/index.html',
+    'birthly/reset-password/index.html',
+    'birthly/open-app/index.html',
+  ]) {
     const result = verifyFixture({ [file]: null });
     assert.notEqual(result.status, 0, file);
     assert.match(result.stderr, new RegExp(`Missing static output files: .*${file}`));
   }
+});
+
+test('deployment verification instructions name the exact production recovery redirect', () => {
+  const instructions = readFileSync(recoveryGuide, 'utf8');
+  assert.match(
+    instructions,
+    /PASSWORD_RESET_REDIRECT_URL=https:\/\/fujisys\.com\.br\/birthly\/reset-password\//,
+  );
 });
 
 test('static verifier requires institutional route files', () => {
@@ -83,5 +97,5 @@ test('static verifier rejects a title with an extra suffix', () => {
 test('static verifier accepts a complete export', () => {
   const result = verifyFixture();
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(result.stdout, 'Verified 10 static output files and iOS callback contracts.\n');
+  assert.equal(result.stdout, 'Verified 11 static output files and iOS callback contracts.\n');
 });

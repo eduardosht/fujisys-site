@@ -21,6 +21,7 @@ const expectedFiles = [
   "birthly/support/index.html",
   "auth/callback/index.html",
   "birthly/confirm-email/index.html",
+  "birthly/reset-password/index.html",
   "birthly/open-app/index.html",
   "404.html",
 ];
