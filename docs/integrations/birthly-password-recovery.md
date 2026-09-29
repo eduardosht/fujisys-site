@@ -58,6 +58,14 @@ Depois do deploy, confirmar por HTTPS que `/birthly/reset-password/`, `/birthly/
 
 Dashboard, variáveis do provedor de deploy e publicação do export são ações externas a este repositório. Este documento não afirma que elas foram aplicadas. Só marcar a configuração como concluída depois de ler esses valores de volta no ambiente correspondente e registrar o resultado sem incluir chaves, tokens, senhas ou fragmentos de callback.
 
+## Registro de verificação local (29/09/2026)
+
+- `npm run build` foi executado com uma URL Supabase de produção sintética, uma publishable key sintética e o redirect HTTPS de produção. A exportação estática gerou `out/birthly/reset-password/index.html`.
+- Os dois valores públicos sintéticos apareceram somente em um chunk JavaScript de cliente gerado; não apareceram no HTML das rotas nem no bundle do callback.
+- A inspeção do HTML da recuperação e dos chunks carregados pelo callback não encontrou access tokens, refresh tokens, senhas, chaves `service_role`, segredos de servidor, material JWT/chave privada ou fixtures sensíveis embutidos.
+- Passaram localmente: `npm run test:static` (34 assertions do callback e 11 arquivos estáticos), `npm run test:callback-output` (8/8), `node --test test-web/*.test.mjs` (48/48), `npm run test:site-architecture` (4/4), `node --experimental-strip-types --test test-web/password-recovery.test.mjs` (10/10), `npx tsc --noEmit` e `git diff --check`.
+- **Pendente, não lido de volta externamente:** dashboard do Supabase (Site URL e Redirect URLs), variáveis do provedor de deploy, publicação/HTTPS e existência das rotas no ambiente publicado. Nenhuma alteração externa foi feita nesta verificação; os valores usados foram somente placeholders locais.
+
 ## Higiene de tokens e suporte
 
 - Nunca colar em tickets ou mensagens a URL completa recebida por e-mail; redigir `code`, `access_token`, `refresh_token`, `token`, senhas e cookies.
