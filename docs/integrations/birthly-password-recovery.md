@@ -47,9 +47,9 @@ O suporte ao esquema legado deve ser removido apenas depois de documentar a jane
 Antes do deploy, configurar as variáveis do ambiente correto e executar:
 
 ```bash
+npm run build
 npm run test:static
 npm run test:callback-output
-npm run build
 node --test test-web/*.test.mjs
 git diff --check
 ```
