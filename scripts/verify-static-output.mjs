@@ -123,6 +123,7 @@ const requiredTitles = {
   "birthly/privacy/index.html": "Política de Privacidade | Fuji Sys",
   "birthly/support/index.html": "Suporte do Birthly | Fuji Sys",
   "birthly/confirm-email/index.html": "Confirmação de e-mail do Birthly | Fuji Sys",
+  "birthly/reset-password/index.html": "Redefinir senha do Birthly | Fuji Sys",
   "birthly/open-app/index.html": "Abrir Birthly | Fuji Sys",
 };
 
