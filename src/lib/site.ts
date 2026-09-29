@@ -1,3 +1,11 @@
+import {
+  INSTITUTIONAL_LINK_ROUTES,
+  INSTITUTIONAL_ROUTE_PATHS,
+  INSTITUTIONAL_ROUTES,
+} from "../site/routes.ts";
+import { BIRTHLY_PRODUCT, PRODUCT_CATALOG } from "../products/catalog.ts";
+import { BIRTHLY_ROUTE_PATHS } from "../products/birthly/routes.ts";
+
 const envUrl = (value: string | undefined): string => value ?? "";
 
 export type RoutePath =
@@ -9,22 +17,20 @@ export type RoutePath =
   | "/birthly/confirm-email/"
   | "/birthly/open-app/";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-
 export function assetPath(path: `/birthday/${string}`): string {
-  return `${basePath}${path}`;
+  return `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 }
 
 export const SITE = {
   name: "Fuji Sys",
   email: "contato@fujisys.com.br",
   routes: {
-    home: "/",
-    birthday: "/birthly",
-    confirmEmail: "/birthly/confirm-email/",
-    openApp: "/birthly/open-app/",
-    privacy: "/birthly/privacy",
-    support: "/birthly/support",
+    home: INSTITUTIONAL_ROUTE_PATHS.home,
+    birthday: BIRTHLY_ROUTE_PATHS.home.replace(/\/$/, ""),
+    confirmEmail: BIRTHLY_ROUTE_PATHS.confirmEmail,
+    openApp: BIRTHLY_ROUTE_PATHS.openApp,
+    privacy: BIRTHLY_ROUTE_PATHS.privacy.replace(/\/$/, ""),
+    support: BIRTHLY_ROUTE_PATHS.support.replace(/\/$/, ""),
     authCallback: "/auth/callback/",
   },
   downloads: {
@@ -33,11 +39,19 @@ export const SITE = {
   },
 } as const;
 
-export const PRODUCTS = [
-  {
-    name: "Birthly",
-    eyebrow: "Lembrar também é cuidar.",
-    description: "Um jeito simples e cuidadoso de manter datas importantes por perto.",
-    href: SITE.routes.birthday,
-  },
-] as const;
+export const INSTITUTIONAL_SITE = {
+  name: SITE.name,
+  email: SITE.email,
+  routes: INSTITUTIONAL_ROUTES,
+  linkRoutes: INSTITUTIONAL_LINK_ROUTES,
+} as const;
+
+// Compatibility projection for older Birthly pages; route ownership lives in the product module.
+export const PRODUCTS = PRODUCT_CATALOG.map(({ name, eyebrow, description, href }) => ({
+  name,
+  eyebrow,
+  description,
+  href,
+}));
+
+export { BIRTHLY_PRODUCT };

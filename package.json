@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && node scripts/finalize-callback-output.mjs",
+    "test:site-architecture": "node --experimental-strip-types --test test-web/site-architecture.test.mjs",
     "test:static": "npm run test:auth-callback && node scripts/verify-static-output.mjs",
     "test:auth-callback": "node --experimental-strip-types scripts/verify-auth-callback.mjs",
     "test:callback-output": "node --test scripts/test-callback-output.mjs"
