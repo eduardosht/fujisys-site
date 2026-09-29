@@ -6,7 +6,7 @@ import {
   classifyAuthCallback,
   safeAuthErrorMessage,
 } from "../../lib/auth-callback";
-import { SITE } from "../../lib/site";
+import { INSTITUTIONAL_SITE, SITE } from "../../lib/site";
 
 type CallbackStatus = "success" | "error" | "direct";
 
@@ -112,7 +112,7 @@ export default function AuthCallbackPage() {
 
         {status === "error" && (
           <div className="auth-callback-actions">
-            <a className="button" href={SITE.routes.home}>
+            <a className="button" href={INSTITUTIONAL_SITE.routes.home()}>
               Voltar ao site
             </a>
             <p className="auth-callback-support">
@@ -123,10 +123,10 @@ export default function AuthCallbackPage() {
 
         {status === "direct" && (
           <div className="auth-callback-actions">
-            <a className="button" href={SITE.routes.home}>
+            <a className="button" href={INSTITUTIONAL_SITE.routes.home()}>
               Ir para o site
             </a>
-            <a className="text-link" href={SITE.routes.support}>
+            <a className="text-link" href={INSTITUTIONAL_SITE.routes.support()}>
               Ver suporte
             </a>
             <p className="auth-callback-support">

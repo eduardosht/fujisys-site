@@ -14,6 +14,8 @@ if (packageJson.scripts?.start === "next start") {
 
 const expectedFiles = [
   "index.html",
+  "privacy/index.html",
+  "support/index.html",
   "birthly/index.html",
   "birthly/privacy/index.html",
   "birthly/support/index.html",
@@ -114,6 +116,8 @@ if (process.env.REQUIRE_BIRTHLY_DOWNLOAD_LINKS === "1") {
 
 const requiredTitles = {
   "index.html": "Fuji Sys — Soluções digitais com propósito",
+  "privacy/index.html": "Política de Privacidade | Fuji Sys",
+  "support/index.html": "Suporte | Fuji Sys",
   "birthly/index.html": "Birthly — Datas importantes por perto | Fuji Sys",
   "birthly/privacy/index.html": "Política de Privacidade | Fuji Sys",
   "birthly/support/index.html": "Suporte do Birthly | Fuji Sys",

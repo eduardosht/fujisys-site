@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
@@ -64,4 +65,33 @@ test('normalizes route paths with a base path and trailing slash', () => {
 
   assert.equal(result.status, 0, result.stderr);
   assert.equal(result.stdout.trim(), '/preview/birthly/privacy/');
+});
+
+test('base-path consumers use canonical institutional and product builders', () => {
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--experimental-strip-types',
+      '--input-type=module',
+      '-e',
+      "import { INSTITUTIONAL_SITE } from './src/lib/site.ts'; import { BIRTHLY_PRODUCT } from './src/products/catalog.ts'; console.log(JSON.stringify({ home: INSTITUTIONAL_SITE.routes.home(), support: INSTITUTIONAL_SITE.routes.support(), privacy: BIRTHLY_PRODUCT.routes.privacy() }));",
+    ],
+    {
+      cwd: new URL('..', import.meta.url),
+      env: { ...process.env, NEXT_PUBLIC_BASE_PATH: '/preview/' },
+      encoding: 'utf8',
+    },
+  );
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(JSON.parse(result.stdout), {
+    home: '/preview/',
+    support: '/preview/support/',
+    privacy: '/preview/birthly/privacy/',
+  });
+
+  const callbackSource = readFileSync(new URL('../src/components/pages/AuthCallbackPage.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(callbackSource, /(?<!INSTITUTIONAL_)SITE\.routes\.(?:home|support)/);
+  assert.match(callbackSource, /INSTITUTIONAL_SITE\.routes\.home\(\)/);
+  assert.match(callbackSource, /INSTITUTIONAL_SITE\.routes\.support\(\)/);
 });

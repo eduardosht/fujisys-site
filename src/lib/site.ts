@@ -10,12 +10,15 @@ const envUrl = (value: string | undefined): string => value ?? "";
 
 export type RoutePath =
   | "/"
-  | "/birthly"
-  | "/birthly/privacy"
-  | "/birthly/support"
-  | "/auth/callback/"
+  | "/privacy/"
+  | "/support/"
+  | "/birthly/"
+  | "/birthly/privacy/"
+  | "/birthly/support/"
   | "/birthly/confirm-email/"
-  | "/birthly/open-app/";
+  | "/birthly/reset-password/"
+  | "/birthly/open-app/"
+  | "/auth/callback/";
 
 export function assetPath(path: `/birthday/${string}`): string {
   return `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
