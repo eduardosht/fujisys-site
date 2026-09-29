@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { ConfirmationStatus } from "@/src/lib/emailConfirmation.mjs";
 import {
+  buildAppUrl,
   buildFallbackAppUrl,
   confirmationReturnPath,
   consumeFallbackResult,
@@ -16,15 +17,19 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function OpenBirthlyPage({ storeLinks }: { storeLinks: StoreLink[] }) {
   const [status, setStatus] = useState<ConfirmationStatus>("unknown");
+  const [isEmailConfirmationFlow, setIsEmailConfirmationFlow] = useState(false);
   const consumed = useRef(false);
 
   useEffect(() => {
     if (consumed.current) return;
     consumed.current = true;
     const search = window.location.search;
+    const isConfirmation = new URLSearchParams(search).get("source") === "email-confirmation";
+    setIsEmailConfirmationFlow(isConfirmation);
     if (search || window.location.hash) {
       window.history.replaceState(window.history.state, "", window.location.pathname);
     }
+    if (!isConfirmation) return;
     try {
       setStatus(consumeFallbackResult(window.sessionStorage, search));
     } catch {
@@ -41,9 +46,19 @@ export default function OpenBirthlyPage({ storeLinks }: { storeLinks: StoreLink[
           {openAppInstruction(storeLinks)}
         </p>
         <div className={styles.actions}>
-          <a className={styles.primary} href={buildFallbackAppUrl(status)}>Abrir Birthly</a>
-          <a className={styles.secondary} href={confirmationReturnPath(basePath, SITE.routes.confirmEmail)}>
-            Voltar à confirmação de e-mail
+          <a
+            className={styles.primary}
+            href={isEmailConfirmationFlow ? buildFallbackAppUrl(status) : buildAppUrl()}
+          >
+            Abrir Birthly
+          </a>
+          <a
+            className={styles.secondary}
+            href={isEmailConfirmationFlow
+              ? confirmationReturnPath(basePath, SITE.routes.confirmEmail)
+              : `${basePath}${SITE.routes.birthday}`}
+          >
+            {isEmailConfirmationFlow ? "Voltar à confirmação de e-mail" : "Voltar ao Birthly"}
           </a>
         </div>
         {storeLinks.length > 0 && (

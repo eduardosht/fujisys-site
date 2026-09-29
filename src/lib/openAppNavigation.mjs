@@ -3,6 +3,10 @@ import { CONFIRMATION_RESULT_STORAGE_KEY } from './emailConfirmationNavigation.m
 
 const allowedStatuses = new Set(['success', 'error', 'unknown']);
 
+export function buildAppUrl() {
+  return 'birthday://open-app';
+}
+
 export function consumeFallbackResult(storage, search = '') {
   const query = new URLSearchParams(search);
   const queryResult = query.get('source') === 'email-confirmation'

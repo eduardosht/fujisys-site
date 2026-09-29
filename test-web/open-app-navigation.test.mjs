@@ -3,6 +3,7 @@ import test from 'node:test';
 
 import { CONFIRMATION_RESULT_STORAGE_KEY } from '../src/lib/emailConfirmationNavigation.mjs';
 import {
+  buildAppUrl,
   buildFallbackAppUrl,
   confirmationReturnPath,
   consumeFallbackResult,
@@ -10,6 +11,14 @@ import {
   openAppInstruction,
 } from '../src/lib/openAppNavigation.mjs';
 import { buildConfirmationFallbackUrl } from '../src/lib/emailConfirmationNavigation.mjs';
+
+test('generic open-app action does not masquerade as an email confirmation', () => {
+  const target = new URL(buildAppUrl());
+
+  assert.equal(target.protocol, 'birthday:');
+  assert.equal(target.hostname, 'open-app');
+  assert.deepEqual([...target.searchParams.keys()], []);
+});
 
 function storage(initial) {
   const values = new Map(initial ? [[CONFIRMATION_RESULT_STORAGE_KEY, initial]] : []);

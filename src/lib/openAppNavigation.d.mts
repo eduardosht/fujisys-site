@@ -10,6 +10,7 @@ export interface StoreLink {
   href: string;
 }
 
+export function buildAppUrl(): string;
 export function consumeFallbackResult(storage: FallbackStorage, search?: string): ConfirmationStatus;
 export function buildFallbackAppUrl(status: string): string;
 export function confirmationReturnPath(basePath: string, confirmationPath: string): string;
