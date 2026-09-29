@@ -2,7 +2,7 @@
 
 ## Status
 
-Approved conversational architecture; awaiting written-spec review before implementation planning.
+Written spec approved; implementation plans created and awaiting execution-method selection.
 
 ## Context
 
