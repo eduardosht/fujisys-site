@@ -43,7 +43,9 @@ function optionalNumber(
 }
 
 export function parseRecoveryCallback(search: string, hash: string): RecoveryCallback {
-  const params = [parseParams(search), parseParams(hash)];
+  const queryParams = parseParams(search);
+  const hashParams = parseParams(hash);
+  const params = [queryParams, hashParams];
 
   if (hasError(params)) return { state: "error" };
 
@@ -52,15 +54,15 @@ export function parseRecoveryCallback(search: string, hash: string): RecoveryCal
     return { state: "invalid" };
   }
 
-  const accessToken = firstNonEmptyValue(params, "access_token");
-  const refreshToken = firstNonEmptyValue(params, "refresh_token");
+  const accessToken = firstNonEmptyValue([hashParams], "access_token");
+  const refreshToken = firstNonEmptyValue([hashParams], "refresh_token");
   if (!accessToken || !refreshToken) return { state: "invalid" };
 
-  const expiresIn = optionalNumber(params, "expires_in");
-  const expiresAt = optionalNumber(params, "expires_at");
+  const expiresIn = optionalNumber([hashParams], "expires_in");
+  const expiresAt = optionalNumber([hashParams], "expires_at");
   if (expiresIn === null || expiresAt === null) return { state: "invalid" };
 
-  const tokenType = firstNonEmptyValue(params, "token_type");
+  const tokenType = firstNonEmptyValue([hashParams], "token_type");
   const session: RecoverySession = { accessToken, refreshToken };
   if (expiresIn !== undefined) session.expiresIn = expiresIn;
   if (expiresAt !== undefined) session.expiresAt = expiresAt;

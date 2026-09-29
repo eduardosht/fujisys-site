@@ -15,6 +15,7 @@ export const RECOVERY_PAGE_STATES = Object.freeze([
 const INVALID_MESSAGE = 'Este link de recuperação é inválido ou expirou. Solicite um novo link.';
 const SESSION_ERROR_MESSAGE = 'Não foi possível validar este link de recuperação. Solicite um novo link.';
 const UPDATE_ERROR_MESSAGE = 'Não foi possível atualizar sua senha. Tente novamente ou solicite um novo link.';
+const SIGN_OUT_ERROR_MESSAGE = 'Sua senha foi atualizada, mas não foi possível encerrar a sessão neste navegador. Feche esta aba antes de continuar.';
 const WEAK_PASSWORD_MESSAGE = 'Use uma senha com pelo menos uma letra e um número.';
 const SHORT_PASSWORD_MESSAGE = 'Escolha uma senha com pelo menos 8 caracteres.';
 const MISMATCH_MESSAGE = 'As senhas não coincidem.';
@@ -81,9 +82,10 @@ export async function submitPasswordReset(supabase, password, confirmation) {
   }
 
   try {
-    await supabase.auth.signOut({ scope: 'local' });
+    const { error } = await supabase.auth.signOut({ scope: 'local' });
+    if (error) return { status: 'error', message: SIGN_OUT_ERROR_MESSAGE };
   } catch {
-    // The password was already changed. Keep the confirmation generic and do not expose client errors.
+    return { status: 'error', message: SIGN_OUT_ERROR_MESSAGE };
   }
 
   return { status: 'success' };

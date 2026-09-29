@@ -78,6 +78,29 @@ test('establishes a valid recovery session without returning token material', as
   assert.doesNotMatch(JSON.stringify(result), /private-/);
 });
 
+test('rejects query-only recovery tokens without calling setSession', async () => {
+  const callback = parseRecoveryCallback(
+    '?type=recovery&access_token=query-access&refresh_token=query-refresh',
+    '',
+  );
+  const calls = [];
+  const supabase = {
+    auth: {
+      async setSession(session) {
+        calls.push(session);
+        return { data: { session: {} }, error: null };
+      },
+    },
+  };
+
+  assert.deepEqual(callback, { state: 'invalid' });
+  assert.deepEqual(await establishRecoverySession(callback, supabase), {
+    status: 'invalid',
+    message: 'Este link de recuperação é inválido ou expirou. Solicite um novo link.',
+  });
+  assert.deepEqual(calls, []);
+});
+
 test('replaces callback history with the canonical route without leaking tokens', () => {
   const events = [];
   replaceRecoveryHistory(
@@ -146,4 +169,38 @@ test('updates the password once, signs out locally, and returns success', async 
     ['updateUser', { password: 'Birthly123' }],
     ['signOut', { scope: 'local' }],
   ]);
+});
+
+test('returns a non-success state when local sign-out fails', async () => {
+  for (const signOut of [
+    async () => {
+      throw new Error('network failure');
+    },
+    async () => ({ error: new Error('session cleanup failed') }),
+  ]) {
+    const calls = [];
+    const supabase = {
+      auth: {
+        async updateUser(input) {
+          calls.push(['updateUser', input]);
+          return { error: null };
+        },
+        async signOut(options) {
+          calls.push(['signOut', options]);
+          return signOut();
+        },
+      },
+    };
+
+    const result = await submitPasswordReset(supabase, 'Birthly123', 'Birthly123');
+
+    assert.deepEqual(result, {
+      status: 'error',
+      message: 'Sua senha foi atualizada, mas não foi possível encerrar a sessão neste navegador. Feche esta aba antes de continuar.',
+    });
+    assert.deepEqual(calls, [
+      ['updateUser', { password: 'Birthly123' }],
+      ['signOut', { scope: 'local' }],
+    ]);
+  }
 });

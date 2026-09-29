@@ -30,15 +30,13 @@ test('accepts a recovery callback with session material from the fragment', () =
   assert.doesNotMatch(JSON.stringify(callback), /discard-me/);
 });
 
-test('accepts recovery markers in the query while keeping session values in memory', () => {
+test('rejects recovery tokens supplied only in the query', () => {
   const callback = parseRecoveryCallback(
     '?type=recovery&access_token=access-example&refresh_token=refresh-example',
     '',
   );
 
-  assert.equal(callback.state, 'recovery');
-  assert.equal(callback.session.accessToken, 'access-example');
-  assert.equal(callback.session.refreshToken, 'refresh-example');
+  assert.deepEqual(callback, { state: 'invalid' });
 });
 
 test('maps Supabase callback errors to an error state without returning raw details', () => {
@@ -61,8 +59,8 @@ test('rejects missing session material and non-recovery callbacks', () => {
 
 test('ignores arbitrary parameters and never returns them as callback data', () => {
   const callback = parseRecoveryCallback(
-    '?type=recovery&access_token=access-example&refresh_token=refresh-example&redirect=https%3A%2F%2Fevil.example',
-    '#unexpected=also-discarded',
+    '?type=recovery&redirect=https%3A%2F%2Fevil.example&query-only=discarded',
+    '#access_token=access-example&refresh_token=refresh-example&unexpected=also-discarded',
   );
 
   assert.deepEqual(callback, {
