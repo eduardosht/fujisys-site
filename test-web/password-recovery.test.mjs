@@ -30,6 +30,13 @@ test('accepts a recovery callback with session material from the fragment', () =
   assert.doesNotMatch(JSON.stringify(callback), /discard-me/);
 });
 
+test('accepts a PKCE recovery callback code from the query without exposing it as a session', () => {
+  assert.deepEqual(
+    parseRecoveryCallback('?code=one-time-code&type=recovery', ''),
+    { state: 'pkce', code: 'one-time-code' },
+  );
+});
+
 test('rejects recovery tokens supplied only in the query', () => {
   const callback = parseRecoveryCallback(
     '?type=recovery&access_token=access-example&refresh_token=refresh-example',
@@ -137,6 +144,29 @@ test('creates and reuses a browser client from public configuration only', () =>
     assert.equal(first, second);
     assert.equal(first.supabaseUrl, 'https://example.supabase.co');
     assert.equal(typeof first.auth.setSession, 'function');
+  } finally {
+    if (previousUrl === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+    else process.env.NEXT_PUBLIC_SUPABASE_URL = previousUrl;
+    if (previousKey === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+    else process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = previousKey;
+    if (previousWindow === undefined) Reflect.deleteProperty(globalThis, 'window');
+    else globalThis.window = previousWindow;
+  }
+});
+
+test('rejects a secret Supabase key configured for the browser', () => {
+  const previousWindow = globalThis.window;
+  const previousUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const previousKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  globalThis.window = {};
+  process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co';
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = 'sb_secret_not-for-browser';
+
+  try {
+    assert.throws(
+      () => getBrowserSupabaseClient(),
+      (error) => error instanceof SupabaseBrowserConfigError,
+    );
   } finally {
     if (previousUrl === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
     else process.env.NEXT_PUBLIC_SUPABASE_URL = previousUrl;

@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { isPublicSupabaseKey } from "./public-config.mjs";
 
 export class SupabaseBrowserEnvironmentError extends Error {
   constructor() {
@@ -21,14 +22,14 @@ export function getBrowserSupabaseClient(): SupabaseClient {
     throw new SupabaseBrowserEnvironmentError();
   }
 
-  if (browserClient) return browserClient;
-
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
 
-  if (!url || !publishableKey) {
+  if (!url || !publishableKey || !isPublicSupabaseKey(publishableKey)) {
     throw new SupabaseBrowserConfigError();
   }
+
+  if (browserClient) return browserClient;
 
   try {
     browserClient = createClient(url, publishableKey, {

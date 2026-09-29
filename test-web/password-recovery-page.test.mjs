@@ -78,6 +78,22 @@ test('establishes a valid recovery session without returning token material', as
   assert.doesNotMatch(JSON.stringify(result), /private-/);
 });
 
+test('exchanges a PKCE recovery code before showing the password form', async () => {
+  const callback = parseRecoveryCallback('?code=one-time-code&type=recovery', '');
+  const calls = [];
+  const supabase = {
+    auth: {
+      async exchangeCodeForSession(code) {
+        calls.push(code);
+        return { data: { session: {} }, error: null };
+      },
+    },
+  };
+
+  assert.deepEqual(await establishRecoverySession(callback, supabase), { status: 'ready' });
+  assert.deepEqual(calls, ['one-time-code']);
+});
+
 test('rejects query-only recovery tokens without calling setSession', async () => {
   const callback = parseRecoveryCallback(
     '?type=recovery&access_token=query-access&refresh_token=query-refresh',

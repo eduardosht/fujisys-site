@@ -8,7 +8,7 @@ Novas solicitações de recuperação devem usar a página HTTPS estática abaix
 PASSWORD_RESET_REDIRECT_URL=https://fujisys.com.br/birthly/reset-password/
 ```
 
-Essa é a URL que o app `birthday` deve enviar ao Supabase em produção. A barra final faz parte do contrato. A página consome o retorno de recuperação no fragmento, remove os dados sensíveis do histórico e permite atualizar a senha no navegador.
+Essa é a URL que o app `birthday` deve enviar ao Supabase em produção. A barra final faz parte do contrato. A página consome o retorno de recuperação no fragmento ou um código PKCE de uso único na query string, remove os dados sensíveis do histórico e permite atualizar a senha no navegador. O código PKCE nunca é registrado nem persistido.
 
 No projeto Supabase de produção, conferir no dashboard do Auth:
 
@@ -35,6 +35,8 @@ Staging e local devem usar projetos Supabase separados sempre que possível. Par
 O app mantém também `EMAIL_CONFIRM_REDIRECT_URL` para confirmação de cadastro. Em produção, esse valor é exatamente `https://fujisys.com.br/birthly/confirm-email/`; ele não deve ser reutilizado como destino de recuperação.
 
 Os valores públicos podem ser injetados no build do site, mas não devem ser gravados neste documento, em commits, screenshots ou logs. Não criar variáveis `NEXT_PUBLIC_*` para segredos. Em particular, nunca fornecer uma chave `service_role` (nem qualquer chave administrativa ou token de sessão) ao site, ao app ou ao navegador. A chave publicável e a URL do projeto podem aparecer no bundle por serem credenciais públicas; isso não autoriza expor tokens, senhas ou fragmentos de links de recuperação.
+
+O script `scripts/verify-public-supabase-config.mjs` roda antes do build e interrompe a publicação quando as variáveis públicas estão ausentes ou quando a chave tem formato de secret/service-role. Isso evita gerar um bundle estático com uma credencial administrativa.
 
 ## Migração do deep link legado
 

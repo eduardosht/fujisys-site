@@ -44,6 +44,16 @@ function recoverySessionInput(session) {
 }
 
 export async function establishRecoverySession(callback, supabase) {
+  if (callback.state === 'pkce') {
+    try {
+      const { error } = await supabase.auth.exchangeCodeForSession(callback.code);
+      if (error) return { status: 'error', message: SESSION_ERROR_MESSAGE };
+      return { status: 'ready' };
+    } catch {
+      return { status: 'error', message: SESSION_ERROR_MESSAGE };
+    }
+  }
+
   if (callback.state !== 'recovery') return callbackPageState(callback);
 
   try {

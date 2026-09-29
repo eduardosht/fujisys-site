@@ -10,6 +10,7 @@ export type RecoverySession = {
 
 export type RecoveryCallback =
   | { state: "recovery"; session: RecoverySession }
+  | { state: "pkce"; code: string }
   | { state: "error" }
   | { state: "invalid" };
 
@@ -50,6 +51,11 @@ export function parseRecoveryCallback(search: string, hash: string): RecoveryCal
   if (hasError(params)) return { state: "error" };
 
   const types = valuesFor(params, "type").filter((value) => value.length > 0);
+  const code = firstNonEmptyValue([queryParams], "code");
+  if (code && (types.length === 0 || types.every((value) => value === "recovery"))) {
+    return { state: "pkce", code };
+  }
+
   if (types.length === 0 || types.some((value) => value !== "recovery")) {
     return { state: "invalid" };
   }
