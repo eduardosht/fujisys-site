@@ -83,11 +83,11 @@ export function sanitizeRecoveryUrl(pathname: string): string {
 
 export function recoveryErrorMessage(callback: RecoveryCallback): string {
   if (callback.state === "error") {
-    return "Não foi possível recuperar sua senha. O link pode ter expirado ou já ter sido usado.";
+    return "Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.";
   }
 
   if (callback.state === "invalid") {
-    return "Este link de recuperação é inválido ou expirou. Solicite um novo link.";
+    return "Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.";
   }
 
   return "";

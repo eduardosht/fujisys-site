@@ -12,9 +12,9 @@ export const RECOVERY_PAGE_STATES = Object.freeze([
   'unavailable',
 ]);
 
-const INVALID_MESSAGE = 'Este link de recuperação é inválido ou expirou. Solicite um novo link.';
-const SESSION_ERROR_MESSAGE = 'Não foi possível validar este link de recuperação. Solicite um novo link.';
-const UPDATE_ERROR_MESSAGE = 'Não foi possível atualizar sua senha. Tente novamente ou solicite um novo link.';
+const INVALID_MESSAGE = 'Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.';
+const SESSION_ERROR_MESSAGE = 'Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.';
+const UPDATE_ERROR_MESSAGE = 'Não foi possível atualizar sua senha. Tente novamente ou abra o Birthly para solicitar um novo link.';
 const SIGN_OUT_ERROR_MESSAGE = 'Sua senha foi atualizada, mas não foi possível encerrar a sessão neste navegador. Feche esta aba antes de continuar.';
 const WEAK_PASSWORD_MESSAGE = 'Use uma senha com pelo menos uma letra e um número.';
 const SHORT_PASSWORD_MESSAGE = 'Escolha uma senha com pelo menos 8 caracteres.';

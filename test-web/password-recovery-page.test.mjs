@@ -112,7 +112,7 @@ test('rejects query-only recovery tokens without calling setSession', async () =
   assert.deepEqual(callback, { state: 'invalid' });
   assert.deepEqual(await establishRecoverySession(callback, supabase), {
     status: 'invalid',
-    message: 'Este link de recuperação é inválido ou expirou. Solicite um novo link.',
+    message: 'Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.',
   });
   assert.deepEqual(calls, []);
 });

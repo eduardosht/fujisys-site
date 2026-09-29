@@ -53,7 +53,7 @@ test('maps Supabase callback errors to an error state without returning raw deta
   );
 
   assert.deepEqual(callback, { state: 'error' });
-  assert.equal(recoveryErrorMessage(callback), 'Não foi possível recuperar sua senha. O link pode ter expirado ou já ter sido usado.');
+  assert.equal(recoveryErrorMessage(callback), 'Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.');
   assert.doesNotMatch(recoveryErrorMessage(callback), /private-detail|otp_expired|access_denied/);
 });
 
@@ -88,7 +88,7 @@ test('returns a generic invalid-link message for invalid callbacks', () => {
   const callback = parseRecoveryCallback('?type=signup', '');
 
   assert.equal(callback.state, 'invalid');
-  assert.equal(recoveryErrorMessage(callback), 'Este link de recuperação é inválido ou expirou. Solicite um novo link.');
+  assert.equal(recoveryErrorMessage(callback), 'Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.');
 });
 
 test('requires a browser before creating the Supabase client', () => {

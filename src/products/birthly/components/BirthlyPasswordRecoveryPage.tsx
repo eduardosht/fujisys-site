@@ -34,14 +34,14 @@ type RecoveryPageState = {
 };
 
 const genericSessionError =
-  "Não foi possível validar este link de recuperação. Solicite um novo link.";
+  "Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.";
 
 function stateMessage(status: RecoveryPageStatus): string {
   if (status === "checking") return recoveryMessages.checking;
   if (status === "ready") return recoveryMessages.ready;
   if (status === "success") return recoveryMessages.success;
   if (status === "unavailable") return recoveryMessages.unavailable;
-  return "Este link de recuperação é inválido ou expirou. Solicite um novo link.";
+  return "Este link já foi usado ou expirou. Abra o Birthly e toque em ‘Esqueci minha senha’ para solicitar um novo link.";
 }
 
 function statusSymbol(status: RecoveryPageStatus): string {
