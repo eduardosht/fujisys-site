@@ -23,6 +23,7 @@ const expectedFiles = [
   "birthly/confirm-email/index.html",
   "birthly/reset-password/index.html",
   "birthly/open-app/index.html",
+  "robots.txt",
   "404.html",
 ];
 
@@ -32,6 +33,20 @@ const missingFiles = expectedFiles.filter(
 
 if (missingFiles.length > 0) {
   throw new Error(`Missing static output files: ${missingFiles.join(", ")}`);
+}
+
+const robotsDocument = readFileSync(join(outputDir, "robots.txt"), "utf8");
+for (const path of [
+  "/auth/callback/",
+  "/birthly/confirm-email/",
+  "/birthly/reset-password/",
+  "/birthly/open-app/",
+]) {
+  assert.doesNotMatch(
+    robotsDocument,
+    new RegExp(`Disallow: ${path.replaceAll("/", "\\/")}`),
+    `robots.txt must not block ${path}; Google must be able to read its noindex metadata`,
+  );
 }
 
 const callbackSource = readFileSync(
@@ -126,6 +141,20 @@ const requiredTitles = {
   "birthly/reset-password/index.html": "Redefinir senha do Birthly | Fuji Sys",
   "birthly/open-app/index.html": "Abrir Birthly | Fuji Sys",
 };
+
+for (const file of [
+  "auth/callback/index.html",
+  "birthly/confirm-email/index.html",
+  "birthly/reset-password/index.html",
+  "birthly/open-app/index.html",
+]) {
+  const html = readFileSync(join(outputDir, file), "utf8");
+  assert.match(
+    html,
+    /<meta name="robots" content="noindex,\s*nofollow"\s*\/?\s*>/,
+    `${file} must include noindex,nofollow metadata`,
+  );
+}
 
 for (const [file, title] of Object.entries(requiredTitles)) {
   const html = readFileSync(join(outputDir, file), "utf8");

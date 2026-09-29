@@ -5,6 +5,8 @@ import { configuredStoreLinks } from "@/src/lib/openAppNavigation.mjs";
 export const metadata: Metadata = {
   title: "Abrir Birthly | Fuji Sys",
   description: "Abra o aplicativo Birthly ou veja como instalá-lo.",
+  referrer: "no-referrer",
+  robots: { index: false, follow: false },
 };
 
 export default function Page() {

@@ -23,21 +23,43 @@ const titles = {
 
 function verifyFixture(changes = {}) {
   const root = mkdtempSync(join(tmpdir(), 'birthly-static-output-'));
+  const authRoutes = new Set([
+    'auth/callback/index.html',
+    'birthly/confirm-email/index.html',
+    'birthly/reset-password/index.html',
+    'birthly/open-app/index.html',
+  ]);
+  const includeNoIndex = changes.__noindex !== false;
   try {
     writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts: {} }));
     for (const [file, title] of Object.entries(titles)) {
+      if (file === '__noindex') continue;
       if (changes[file] === null) continue;
       const path = join(root, 'out', file);
       mkdirSync(dirname(path), { recursive: true });
-      writeFileSync(path, `<html><head><title>${changes[file] ?? title}</title></head></html>`);
+      const robots = includeNoIndex && authRoutes.has(file)
+        ? '<meta name="robots" content="noindex,nofollow">'
+        : '';
+      writeFileSync(path, `<html><head>${robots}<title>${changes[file] ?? title}</title></head></html>`);
     }
     writeFileSync(join(root, 'out', '404.html'), '<html></html>');
+    if (changes.robots !== null) {
+      writeFileSync(
+        join(root, 'out', 'robots.txt'),
+        changes.robots === 'blocked'
+          ? 'User-agent: *\nDisallow: /auth/callback/\nDisallow: /birthly/confirm-email/\nDisallow: /birthly/reset-password/\nDisallow: /birthly/open-app/\n'
+          : 'User-agent: *\nAllow: /\n',
+      );
+    }
     const callbackSource = join(root, 'src/components/pages/AuthCallbackPage.tsx');
     mkdirSync(dirname(callbackSource), { recursive: true });
     writeFileSync(callbackSource, 'history.replaceState({}, "", "/auth/callback/");');
     const callbackPath = join(root, 'out/auth/callback/index.html');
     mkdirSync(dirname(callbackPath), { recursive: true });
-    writeFileSync(callbackPath, '<html><head><meta name="referrer" content="no-referrer"><script src="/_next/static/chunks/callback.js"></script></head><body>E-mail confirmado com sucesso birthday://signup-confirmation</body></html>');
+    const callbackRobots = includeNoIndex
+      ? '<meta name="robots" content="noindex,nofollow">'
+      : '';
+    writeFileSync(callbackPath, `<html><head>${callbackRobots}<meta name="referrer" content="no-referrer"><script src="/_next/static/chunks/callback.js"></script></head><body>E-mail confirmado com sucesso birthday://signup-confirmation</body></html>`);
     const callbackBundle = join(root, 'out/_next/static/chunks/callback.js');
     mkdirSync(dirname(callbackBundle), { recursive: true });
     writeFileSync(callbackBundle, 'history.replaceState({}, "", "/auth/callback/");');
@@ -78,6 +100,18 @@ test('static verifier requires institutional route files', () => {
   }
 });
 
+test('static verifier requires noindex metadata on auth flow pages', () => {
+  const result = verifyFixture({ __noindex: false });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /noindex|robots\.txt/i);
+});
+
+test('static verifier keeps noindex auth pages crawlable', () => {
+  const result = verifyFixture({ robots: 'blocked' });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /must not block/i);
+});
+
 test('static verifier requires the exported route titles', () => {
   for (const file of ['birthly/confirm-email/index.html', 'birthly/open-app/index.html']) {
     const result = verifyFixture({ [file]: 'Wrong title' });
@@ -97,5 +131,5 @@ test('static verifier rejects a title with an extra suffix', () => {
 test('static verifier accepts a complete export', () => {
   const result = verifyFixture();
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(result.stdout, 'Verified 11 static output files and iOS callback contracts.\n');
+  assert.equal(result.stdout, 'Verified 12 static output files and iOS callback contracts.\n');
 });

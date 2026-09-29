@@ -4,6 +4,7 @@ import { SITE } from '@/lib/site';
 
 export const metadata: Metadata = {
   referrer: 'no-referrer',
+  robots: { index: false, follow: false },
   other: { 'birthly-app-store-url': SITE.downloads.appStore },
 };
 

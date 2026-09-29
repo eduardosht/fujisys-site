@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Redefinir senha do Birthly | Fuji Sys",
   description: "Crie uma nova senha para voltar ao aplicativo Birthly.",
   referrer: "no-referrer",
+  robots: { index: false, follow: false },
 };
 
 export default function Page() {
