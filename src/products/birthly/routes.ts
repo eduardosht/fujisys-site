@@ -3,6 +3,7 @@ import { buildSiteLink, buildSiteRoute } from "../../site/routes.ts";
 
 export const BIRTHLY_ROUTE_PATHS = {
   home: "/birthly/",
+  terms: "/birthly/terms/",
   privacy: "/birthly/privacy/",
   support: "/birthly/support/",
   confirmEmail: "/birthly/confirm-email/",
@@ -16,6 +17,7 @@ export type BirthlyRoutes = {
 
 export const BIRTHLY_ROUTES: BirthlyRoutes = {
   home: () => buildSiteRoute(BIRTHLY_ROUTE_PATHS.home),
+  terms: () => buildSiteRoute(BIRTHLY_ROUTE_PATHS.terms),
   privacy: () => buildSiteRoute(BIRTHLY_ROUTE_PATHS.privacy),
   support: () => buildSiteRoute(BIRTHLY_ROUTE_PATHS.support),
   confirmEmail: () => buildSiteRoute(BIRTHLY_ROUTE_PATHS.confirmEmail),
@@ -25,6 +27,7 @@ export const BIRTHLY_ROUTES: BirthlyRoutes = {
 
 export const BIRTHLY_LINK_ROUTES: BirthlyRoutes = {
   home: () => buildSiteLink(BIRTHLY_ROUTE_PATHS.home),
+  terms: () => buildSiteLink(BIRTHLY_ROUTE_PATHS.terms),
   privacy: () => buildSiteLink(BIRTHLY_ROUTE_PATHS.privacy),
   support: () => buildSiteLink(BIRTHLY_ROUTE_PATHS.support),
   confirmEmail: () => buildSiteLink(BIRTHLY_ROUTE_PATHS.confirmEmail),

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LegalLayout } from "../LegalLayout";
 import { LottiePlayer } from "../LottiePlayer";
 import { Reveal } from "../Reveal";
-import { assetPath, INSTITUTIONAL_SITE } from "../../lib/site";
+import { assetPath, INSTITUTIONAL_SITE, siteAssetPath } from "../../lib/site";
 import { BIRTHLY_PRODUCT, PRODUCT_CATALOG } from "../../products/catalog";
 
 const Arrow = () => <span aria-hidden="true">↗</span>;
@@ -51,23 +51,42 @@ export function BirthdayPage() {
       <Reveal className="benefit-reveal" delay={120}><article><span className="benefit-icon">02</span><h2>Acesso simples</h2><p>Entre com sua conta usando seu e-mail e mantenha seu acesso de forma prática.</p></article></Reveal>
       <Reveal className="benefit-reveal" delay={240}><article><span className="benefit-icon">03</span><h2>Feito com cuidado</h2><p>Uma experiência leve, clara e pensada para acompanhar momentos que merecem atenção.</p></article></Reveal>
     </section>
-    <Reveal><section className="official-links"><div><p className="eyebrow coral">Informações oficiais</p><h2>Transparência faz parte.</h2></div><div className="link-list"><Link href={BIRTHLY_PRODUCT.linkRoutes.privacy()}>Política de privacidade <Arrow /></Link><Link href={BIRTHLY_PRODUCT.linkRoutes.support()}>Suporte do Birthly <Arrow /></Link></div></section></Reveal>
+    <Reveal><section className="official-links"><div><p className="eyebrow coral">Informações oficiais</p><h2>Transparência faz parte.</h2></div><div className="link-list"><Link href={BIRTHLY_PRODUCT.linkRoutes.terms()}>Termos de Uso <Arrow /></Link><Link href={BIRTHLY_PRODUCT.linkRoutes.privacy()}>Política de privacidade <Arrow /></Link><Link href={BIRTHLY_PRODUCT.linkRoutes.support()}>Suporte do Birthly <Arrow /></Link></div></section></Reveal>
   </div>;
+}
+
+export function TermsPage() {
+  return <div className="privacy-page"><LegalLayout eyebrow="Birthly · Documento oficial" title="Termos de Uso" intro="Condições de acesso e utilização do Birthly.">
+    <p className="updated">Versão v3.0 · Vigência: 01 de novembro de 2026</p>
+    <section><h2>1. Aceite e escopo</h2><p>Estes Termos regulam o acesso ao Birthly, suas telas, recursos, integrações e assinaturas. Ao criar conta, acessar ou utilizar o app, você declara que leu e concorda com estes Termos. Se não concordar, não utilize o serviço.</p><p>A Política de Privacidade integra estes Termos. A versão aplicável é a apresentada no uso e registrada no aceite quando solicitado.</p></section>
+    <section><h2>2. O que o serviço oferece</h2><p>O Birthly organiza aniversariantes, datas, lembretes e cartões personalizados. Conforme o dispositivo, o ambiente e as permissões, o serviço pode incluir cadastro e sincronização, importação de contatos, autenticação, notificações, widget, mensagens, foto de perfil, foto de fundo e assinatura manuscrita no cartão.</p><p>A foto de fundo do cartão é temporária no fluxo atual e é descartada automaticamente ao sair do fluxo ou após compartilhar. Nada fica salvo no app e não há upload automático para o servidor.</p><p>O PNG final somente é enviado ao aplicativo de compartilhamento quando você toca em Compartilhar e confirma o destino.</p></section>
+    <section><h2>3. Conta, segurança e elegibilidade</h2><p>Você deve fornecer informações corretas, proteger suas credenciais e comunicar acessos não autorizados. O login pode usar e-mail e senha ou Apple/Google quando disponível. Não compartilhe senha, códigos ou sessão. O app não é intencionalmente direcionado a crianças.</p></section>
+    <section><h2>4. Conteúdo e dados de terceiros</h2><p>Você mantém os direitos sobre nomes, datas, notas, mensagens, imagens, desenhos e assinaturas inseridos. Você declara ter autorização ou base legal adequada para cadastrar dados de outras pessoas. Não insira conteúdo ilegal, abusivo, discriminatório, difamatório ou que viole privacidade, imagem, direitos autorais ou segurança.</p></section>
+    <section><h2>5. Planos, limites e compras</h2><p>A versão gratuita pode ter limites. Na configuração atual, o limite gratuito é de até 15 aniversariantes. O Premium, quando disponível, amplia os recursos descritos na oferta apresentada no app. Preços, renovação, cancelamento, restauração e reembolso seguem a loja responsável pela cobrança.</p></section>
+    <section><h2>6. Permissões e terceiros</h2><p>O app pode solicitar contatos, câmera, fotos, notificações e autenticação local para recursos específicos. Supabase fornece autenticação, banco e sincronização; Firebase fornece analytics, Crashlytics e mensagens push; Apple e Google fornecem serviços de plataforma e compras quando usados.</p></section>
+    <section><h2>7. Uso aceitável</h2><p>Você não pode acessar contas ou dados de terceiros, burlar limites, explorar vulnerabilidades, interferir no serviço, distribuir malware, automatizar requisições abusivas ou usar o Birthly para finalidade ilegal.</p></section>
+    <section><h2>8. Disponibilidade e responsabilidade</h2><p>Autenticação, nuvem, notificações, lojas, galeria, câmera e compartilhamento dependem de terceiros e podem ficar indisponíveis ou mudar. Lembretes são auxílio e não substituem a conferência das datas.</p></section>
+    <section><h2>9. Propriedade intelectual</h2><p>Nome, identidade visual, código, interfaces, ilustrações, textos e componentes do Birthly pertencem ao titular ou licenciantes. Não copie, venda, alugue, redistribua ou explore comercialmente o app sem autorização.</p></section>
+    <section><h2>10. Exclusão e encerramento</h2><p>Você pode iniciar a exclusão da conta pelo perfil. A exclusão remove ou torna inacessíveis os dados segundo o fluxo implementado e as obrigações de retenção. Backups, segurança, comprovantes de transação e registros legais podem permanecer pelo tempo necessário.</p></section>
+    <section><h2>11. Alterações futuras</h2><p>Podemos atualizar estes Termos por mudanças no app, serviços, legislação, segurança ou modelo comercial. Cada versão terá número e vigência. Mudanças materiais serão destacadas e, quando necessário, exigirão novo aceite.</p></section>
+    <section><h2>12. Lei aplicável e contato</h2><p>Estes Termos são regidos pelas leis brasileiras. O controlador é Eduardo Shoiti Fujiwara, pessoa física, sob a marca FujiSys, contatável pelo endereço Rua Conselheiro Brotero, 717, São Paulo - SP, CEP 01232-011, e pelo e-mail <a href={`mailto:${BIRTHLY_PRODUCT.support.email}?subject=Termos%20de%20Uso%20Birthly`}>{BIRTHLY_PRODUCT.support.email}</a>.</p></section>
+    <nav className="support-nav" aria-label="Documentos oficiais do Birthly"><Link href={BIRTHLY_PRODUCT.linkRoutes.privacy()}>Política de privacidade <Arrow /></Link><a href={siteAssetPath("/birthly/legal/terms-of-use-v3.pdf")}>Baixar PDF <Arrow /></a></nav>
+  </LegalLayout></div>;
 }
 
 export function PrivacyPage() {
   return <div className="privacy-page"><LegalLayout eyebrow="Birthly · Documento oficial" title="Política de Privacidade" intro="Transparência e cuidado também fazem parte da experiência Birthly.">
-    <p className="updated">Última atualização: 16 de julho de 2026</p>
+    <p className="updated">Versão v3.0 · Vigência: 01 de novembro de 2026</p>
     <section><h2>1. Sobre esta política</h2><p>A Fuji Sys é responsável pelo aplicativo Birthly. Esta política explica, em linguagem clara, qual dado pessoal utilizamos, por que ele é necessário e quais escolhas você tem.</p></section>
     <section><h2>2. Dado pessoal coletado</h2><p>O <strong>único dado pessoal coletado pelo Birthly é o seu endereço de e-mail</strong>. Não coletamos outros dados pessoais para o funcionamento da conta.</p></section>
     <section><h2>3. Como usamos seu e-mail</h2><p>Usamos o endereço de e-mail exclusivamente para <strong>autenticação, acesso e gestão da conta</strong> no Birthly, incluindo o envio das mensagens necessárias para você entrar e administrar seu acesso.</p></section>
     <section><h2>4. Venda, publicidade e compartilhamento</h2><p><strong>Não vendemos seus dados</strong> e não compartilhamos seu e-mail para publicidade. O dado é utilizado somente nas finalidades descritas nesta política.</p><p>Usamos a <strong>Resend</strong> como fornecedora de infraestrutura para o envio dos e-mails de autenticação. Ela processa o endereço de e-mail apenas na medida necessária para prestar esse serviço.</p></section>
     <section><h2>5. Segurança</h2><p>Adotamos medidas técnicas e organizacionais razoáveis para proteger o e-mail contra acesso, alteração, divulgação ou destruição não autorizados. O acesso é limitado às pessoas e aos fornecedores que precisam da informação para operar o serviço.</p></section>
-    <section><h2>6. Retenção</h2><p>Mantemos seu e-mail apenas pelo período necessário ao funcionamento e à gestão da sua conta e ao cumprimento de obrigações legais ou regulatórias aplicáveis. Quando a retenção não for mais necessária, o dado será excluído ou anonimizado de forma segura.</p></section>
+    <section><h2>6. Retenção</h2><p>Mantemos seu e-mail apenas pelo período necessário ao funcionamento e à gestão da sua conta e ao cumprimento de obrigações legais ou regulatórias aplicáveis. Fotos de fundo e arquivos temporários do cartão são usados somente durante a criação/compartilhamento e descartados automaticamente ao sair do fluxo ou após compartilhar; nada fica salvo no app e não há upload automático. Quando a retenção não for mais necessária, o dado será excluído ou anonimizado de forma segura.</p></section>
     <section><h2>7. Seus direitos</h2><p>Você pode solicitar acesso ao seu dado, correção do endereço de e-mail ou exclusão da conta e do dado associado. Para exercer esses direitos, escreva para <a href={`mailto:${BIRTHLY_PRODUCT.support.email}?subject=Privacidade%20Birthly`}>{BIRTHLY_PRODUCT.support.email}</a>. Poderemos pedir informações suficientes para confirmar que a solicitação pertence ao titular da conta.</p></section>
-    <section><h2>8. Alterações nesta política</h2><p>Esta política poderá ser atualizada para refletir mudanças no Birthly ou em nossas práticas. A nova versão será publicada nesta mesma URL, acompanhada da data de atualização.</p></section>
+    <section><h2>8. Alterações nesta política</h2><p>Esta política poderá ser atualizada para refletir mudanças no Birthly ou em nossas práticas. A nova versão será publicada nesta mesma URL, acompanhada da data de vigência.</p></section>
     <section><h2>9. Contato</h2><p>Para dúvidas sobre privacidade ou sobre o tratamento do seu e-mail, entre em contato com a Fuji Sys pelo endereço <a href={`mailto:${BIRTHLY_PRODUCT.support.email}?subject=Privacidade%20Birthly`}>{BIRTHLY_PRODUCT.support.email}</a>.</p></section>
-    <aside className="legal-note">Este texto descreve as práticas operacionais informadas pela Fuji Sys e não constitui parecer jurídico.</aside>
+    <nav className="support-nav" aria-label="Documentos oficiais do Birthly"><Link href={BIRTHLY_PRODUCT.linkRoutes.terms()}>Termos de Uso <Arrow /></Link><a href={siteAssetPath("/birthly/legal/privacy-policy-v3.pdf")}>Baixar PDF <Arrow /></a></nav>
   </LegalLayout></div>;
 }
 

@@ -13,6 +13,7 @@ export type RoutePath =
   | "/privacy/"
   | "/support/"
   | "/birthly/"
+  | "/birthly/terms/"
   | "/birthly/privacy/"
   | "/birthly/support/"
   | "/birthly/confirm-email/"
@@ -24,6 +25,10 @@ export function assetPath(path: `/birthday/${string}`): string {
   return `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 }
 
+export function siteAssetPath(path: `/${string}`): string {
+  return `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
+}
+
 export const SITE = {
   name: "Fuji Sys",
   email: "contato@fujisys.com.br",
@@ -32,6 +37,7 @@ export const SITE = {
     birthday: BIRTHLY_ROUTE_PATHS.home.replace(/\/$/, ""),
     confirmEmail: BIRTHLY_ROUTE_PATHS.confirmEmail,
     openApp: BIRTHLY_ROUTE_PATHS.openApp,
+    terms: BIRTHLY_ROUTE_PATHS.terms.replace(/\/$/, ""),
     privacy: BIRTHLY_ROUTE_PATHS.privacy.replace(/\/$/, ""),
     support: BIRTHLY_ROUTE_PATHS.support.replace(/\/$/, ""),
     authCallback: "/auth/callback/",

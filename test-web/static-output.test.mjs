@@ -13,6 +13,7 @@ const titles = {
   'privacy/index.html': 'Política de Privacidade | Fuji Sys',
   'support/index.html': 'Suporte | Fuji Sys',
   'birthly/index.html': 'Birthly — Datas importantes por perto | Fuji Sys',
+  'birthly/terms/index.html': 'Termos de Uso | Fuji Sys',
   'birthly/privacy/index.html': 'Política de Privacidade | Fuji Sys',
   'birthly/support/index.html': 'Suporte do Birthly | Fuji Sys',
   'auth/callback/index.html': 'Confirmar e-mail | Birthly',
@@ -131,5 +132,5 @@ test('static verifier rejects a title with an extra suffix', () => {
 test('static verifier accepts a complete export', () => {
   const result = verifyFixture();
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(result.stdout, 'Verified 12 static output files and iOS callback contracts.\n');
+  assert.equal(result.stdout, 'Verified 13 static output files and iOS callback contracts.\n');
 });

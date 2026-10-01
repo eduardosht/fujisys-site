@@ -5,6 +5,7 @@ const canonicalRoutePaths: RoutePath[] = [
   "/privacy/",
   "/support/",
   "/birthly/",
+  "/birthly/terms/",
   "/birthly/privacy/",
   "/birthly/support/",
   "/birthly/confirm-email/",

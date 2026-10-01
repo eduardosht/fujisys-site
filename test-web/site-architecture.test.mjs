@@ -30,6 +30,7 @@ test('exposes canonical Birthly routes and independent institutional routes', ()
     Object.fromEntries(Object.entries(BIRTHLY_ROUTES).map(([name, route]) => [name, route()])),
     {
       home: '/birthly/',
+      terms: '/birthly/terms/',
       privacy: '/birthly/privacy/',
       support: '/birthly/support/',
       confirmEmail: '/birthly/confirm-email/',
