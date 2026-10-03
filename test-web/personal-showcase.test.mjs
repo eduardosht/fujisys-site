@@ -45,6 +45,7 @@ test('home copy speaks in the first person and invites collaboration', () => {
   assert.match(home[1], /Algumas ideias começam numa necessidade minha\. Outras começam numa conversa\./);
   assert.match(home[1], /problema real/);
   assert.match(home[1], /construir (?:algo )?juntos/);
+  assert.match(home[1], /href="#produtos">Conheça meus produtos/);
   assert.match(home[1], /<Reveal[^>]*delay=\{80\}[^>]*><section className="statement/);
   assert.match(home[1], /<Reveal[^>]*delay=\{160\}[^>]*><section className="section products/);
   assert.match(home[1], /<Reveal[^>]*delay=\{240\}[^>]*><section className="contact-panel/);
@@ -60,4 +61,5 @@ test('home and card showcase styles support wide, mobile, and reduced-motion lay
   assert.match(css, /@media\s*\(max-width:\s*850px\)\s*\{\s*\.home-hero\s*\{[^}]*grid-template-columns:\s*1fr[^}]*\}\s*\.birthday-card-showcase\s*\{[^}]*grid-template-columns:\s*1fr/);
   assert.match(css, /@media\s*\(max-width:\s*580px\)\s*\{\s*\.home-hero h1\s*\{[^}]*font-size:\s*clamp\(2\.6rem,11vw,3\.5rem\)/);
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{\s*\.birthday-card-image\s*\{[^}]*animation-duration:\s*\.01ms[^}]*animation-iteration-count:\s*1[^}]*transform:\s*none/);
+  assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{[^\n]*\.product-card:hover,\s*\.contact-panel:hover\s*\{\s*transform:\s*none!important/);
 });

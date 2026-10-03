@@ -14,7 +14,7 @@ export function HomePage() {
         <p className="eyebrow">Estúdio de produtos digitais</p>
         <h1 id="home-title">Eu crio ferramentas para lembrar, organizar e aproximar.</h1>
         <p className="lede">Transformo problemas do dia a dia em produtos digitais simples e cuidadosos.</p>
-        <a className="text-link" href="#produtos">Conheça nosso trabalho <span aria-hidden="true">↓</span></a>
+        <a className="text-link" href="#produtos">Conheça meus produtos <span aria-hidden="true">↓</span></a>
       </Reveal>
       <Reveal className="hero-art-reveal" delay={160}><div className="hero-art" aria-hidden="true"><span className="orbit orbit-one" /><span className="orbit orbit-two" /><span className="spark">F</span></div></Reveal>
     </section>

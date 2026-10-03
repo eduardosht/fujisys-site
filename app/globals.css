@@ -43,4 +43,4 @@
 @media (hover:hover) and (pointer:fine){.statement:hover{background-color:rgba(255,255,255,.25)}.contact-panel:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(23,23,27,.12)}.birthday-card-showcase:hover{background-color:rgba(255,255,255,.25)}.birthday-card-showcase:hover .birthday-card-stage{box-shadow:0 20px 55px rgba(34,26,90,.08)}}
 @media(max-width:850px){.home-hero{grid-template-columns:1fr}.birthday-card-showcase{grid-template-columns:1fr}.birthday-card-stage{width:100%}}
 @media(max-width:580px){.home-hero h1{font-size:clamp(2.6rem,11vw,3.5rem)}}
-@media(prefers-reduced-motion:reduce){.birthday-card-image{animation-duration:.01ms!important;animation-iteration-count:1!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){.birthday-card-image{animation-duration:.01ms!important;animation-iteration-count:1!important;transform:none!important}.product-card:hover,.contact-panel:hover{transform:none!important}}
