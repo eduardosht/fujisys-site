@@ -46,6 +46,10 @@ export function BirthdayPage() {
       <Reveal className="birthday-stage-reveal" delay={160}><div className="birthday-stage"><img className="birthday-hero-logo" src={assetPath("/birthday/app-icon.png")} alt="Ícone do aplicativo Birthly" /><LottiePlayer className="celebration-lottie" src={assetPath("/birthday/lotties/celebration.lottie")} /><span className="confetti c1" /><span className="confetti c2" /><span className="confetti c3" /></div></Reveal>
     </section>
     <Reveal><section className="birthday-statement section"><p className="section-index">Por que Birthly</p><h2>Lembrar também é uma forma de cuidar.</h2><p>O Birthly reúne o essencial em uma experiência tranquila, para que as datas que importam estejam sempre ao seu alcance.</p></section></Reveal>
+    <Reveal><section className="birthday-card-showcase section" aria-labelledby="birthday-card-title">
+      <div className="birthday-card-copy"><p className="section-index">Uma lembrança para compartilhar</p><h2 id="birthday-card-title">Cartões que guardam um momento.</h2><p>No Birthly, uma data também pode virar uma lembrança para compartilhar: escolha uma foto, escreva sua mensagem e assine do seu jeito.</p></div>
+      <div className="birthday-card-stage"><img className="birthday-card-image" src={assetPath("/birthday/examples/leandro-birthday-card.jpeg")} alt="Exemplo de cartão de aniversário do Birthly" /></div>
+    </section></Reveal>
     <section className="benefit-grid section" aria-label="Benefícios do Birthly">
       <Reveal className="benefit-reveal"><article><span className="benefit-icon">01</span><h2>Tudo em um só lugar</h2><p>Organize datas importantes sem complicação e encontre o que precisa com facilidade.</p></article></Reveal>
       <Reveal className="benefit-reveal" delay={120}><article><span className="benefit-icon">02</span><h2>Acesso simples</h2><p>Entre com sua conta usando seu e-mail e mantenha seu acesso de forma prática.</p></article></Reveal>

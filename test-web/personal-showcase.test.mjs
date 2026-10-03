@@ -18,3 +18,21 @@ test('personal showcase image and favicon assets meet their contracts', () => {
   assert.match(icon, /#8d485a/i);
   assert.match(icon, /#fdc7cc/i);
 });
+
+test('Birthly showcase presents its card example semantically', () => {
+  const contentPath = new URL('../src/components/pages/Content.tsx', import.meta.url);
+  const content = readFileSync(contentPath, 'utf8');
+
+  assert.match(content, /birthday-card-showcase/);
+  assert.match(content, /id="birthday-card-title"/);
+  assert.match(content, /foto/);
+  assert.match(content, /mensagem/);
+  assert.match(content, /assine/);
+  assert.match(content, /assetPath\("\/birthday\/examples\/leandro-birthday-card\.jpeg"\)/);
+  assert.match(content, /alt="Exemplo de cartão de aniversário do Birthly"/);
+  assert.match(content, /<Reveal><section className="birthday-card-showcase\b/);
+
+  const stage = content.match(/<div className="birthday-card-stage">([\s\S]*?)<\/div>/);
+  assert.ok(stage, 'showcase image stage exists');
+  assert.doesNotMatch(stage[1], /<h[1-6]\b/, 'image stage has no overlaid heading');
+});
