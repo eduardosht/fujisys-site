@@ -16,3 +16,12 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal,.layered-reveal>*{opacity:1;filter:none;transform:none}.text-link::after,.card-link::after{transition:none}.birthday-logo,.birthday-hero-logo{transform:none!important}}
 @media (prefers-reduced-motion: reduce){.auth-callback-page *, .auth-callback-page *::before, .auth-callback-page *::after {animation-duration: 0.01ms; animation-iteration-count: 1; transition-duration: 0.01ms; scroll-behavior: auto;}}
 .benefit-reveal,.benefit-grid article{height:100%}.legal-hero{position:relative;isolation:isolate}.legal-hero-copy{position:relative;z-index:1}
+
+/* Birthly app palette */
+:root{--birthday:#8d485a;--birthday-soft:#fdc7cc;--birthday-surface:#fff7f8}
+.coral-button{background:var(--birthday-soft);color:var(--birthday)}
+.product-card{background:var(--birthday-surface)}
+.product-card .eyebrow,.birthday-page .section-index,.benefit-icon{color:var(--birthday)}
+.confetti{background:var(--birthday)}
+.c2{background:#9b5b00}
+.coral-button:hover{background:#f4b7bf}
