@@ -12,30 +12,30 @@ export function HomePage() {
     <section className="hero home-hero" aria-labelledby="home-title">
       <Reveal className="hero-copy layered-reveal">
         <p className="eyebrow">Estúdio de produtos digitais</p>
-        <h1 id="home-title">Ideias que resolvem.<br /><em>Produtos que aproximam.</em></h1>
-        <p className="lede">Na Fuji Sys, transformamos problemas reais em experiências digitais simples, criativas e feitas para durar.</p>
+        <h1 id="home-title">Eu crio ferramentas para lembrar, organizar e aproximar.</h1>
+        <p className="lede">Transformo problemas do dia a dia em produtos digitais simples e cuidadosos.</p>
         <a className="text-link" href="#produtos">Conheça nosso trabalho <span aria-hidden="true">↓</span></a>
       </Reveal>
       <Reveal className="hero-art-reveal" delay={160}><div className="hero-art" aria-hidden="true"><span className="orbit orbit-one" /><span className="orbit orbit-two" /><span className="spark">F</span></div></Reveal>
     </section>
 
-    <Reveal><section className="statement section" id="empresa">
+    <Reveal delay={80}><section className="statement section" id="empresa">
       <p className="section-index">01 — Empresa</p>
-      <div><h2>Boa tecnologia começa com uma pergunta simples.</h2><p>O que pode ficar mais claro, leve ou humano? É daí que partimos para criar soluções úteis — da ideia aos últimos detalhes da experiência.</p></div>
+      <div><h2>Algumas ideias começam numa necessidade minha. Outras começam numa conversa.</h2><p>Escuto, experimento e crio soluções que tornam a vida um pouco mais leve.</p></div>
     </section></Reveal>
 
-    <Reveal><section className="section products" id="produtos" aria-labelledby="products-title">
-      <header className="section-heading"><p className="section-index">02 — Produtos</p><h2 id="products-title">Criado para fazer parte da vida.</h2></header>
+    <Reveal delay={160}><section className="section products" id="produtos" aria-labelledby="products-title">
+      <header className="section-heading"><p className="section-index">02 — Produtos</p><h2 id="products-title">O primeiro produto que criei para estar por perto.</h2></header>
       {PRODUCT_CATALOG.map((product) => <Link className="product-card" href={product.href} key={product.id}>
         <div className="birthday-product-art">
           <img className="birthday-logo" src={assetPath("/birthday/app-icon.png")} alt="" />
           <LottiePlayer className="product-lottie" src={assetPath("/birthday/lotties/present.lottie")} />
         </div>
-        <div className="product-copy"><p className="eyebrow">Nosso primeiro produto</p><h3>{product.name}</h3><p className="product-tagline">{product.eyebrow}</p><p>{product.description}</p><span className="card-link">Conheça o {product.name} <Arrow /></span></div>
+        <div className="product-copy"><p className="eyebrow">Meu primeiro produto</p><h3>{product.name}</h3><p className="product-tagline">{product.eyebrow}</p><p>{product.description}</p><span className="card-link">Conheça o {product.name} <Arrow /></span></div>
       </Link>)}
     </section></Reveal>
 
-    <Reveal><section className="contact-panel" id="contato"><p className="eyebrow">Tem uma ideia?</p><h2>Vamos criar algo útil?</h2><p>Conversas boas também começam de um jeito simples.</p><a className="button button-light" href={`mailto:${INSTITUTIONAL_SITE.email}`}>Fale com a Fuji Sys <Arrow /></a></section></Reveal>
+    <Reveal delay={240}><section className="contact-panel" id="contato"><p className="eyebrow">Vamos conversar?</p><h2>O que podemos criar juntos?</h2><p>Compartilhe uma ideia ou um problema real. Se fizer sentido, vamos construir algo juntos.</p><a className="button button-light" href={`mailto:${INSTITUTIONAL_SITE.email}`}>Fale com a Fuji Sys <Arrow /></a></section></Reveal>
   </>;
 }
 

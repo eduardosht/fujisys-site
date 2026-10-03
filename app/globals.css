@@ -25,3 +25,22 @@
 .confetti{background:var(--birthday)}
 .c2{background:#9b5b00}
 .coral-button:hover{background:#f4b7bf}
+
+/* Personal home and Birthly card showcase */
+.home-hero{grid-template-columns:minmax(0,8fr) minmax(300px,4fr)}
+.home-hero h1{max-width:13ch;font-size:clamp(3.5rem,6vw,6.5rem);line-height:.95}
+.home-hero .hero-art{width:100%}
+.statement{transition:background-color .4s var(--ease),box-shadow .4s var(--ease)}
+.statement h2{max-width:18ch}
+.product-card{transition:transform .45s var(--ease),box-shadow .45s var(--ease),background-color .45s var(--ease)}
+.contact-panel{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.birthday-card-showcase{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:center;gap:clamp(2rem,6vw,6rem);transition:background-color .45s var(--ease)}
+.birthday-card-copy h2{max-width:12ch}
+.birthday-card-copy>p:last-child{max-width:52ch;color:var(--muted);font-size:1.15rem;line-height:1.7}
+.birthday-card-stage{display:grid;place-items:center;min-width:0;padding:clamp(1.5rem,4vw,4rem);border-radius:var(--radius-lg);background:var(--birthday-soft);transition:box-shadow .45s var(--ease)}
+.birthday-card-image{display:block;width:100%;max-width:480px;height:auto;border-radius:var(--radius-sm);box-shadow:0 22px 55px rgba(34,26,90,.16);animation:birthday-card-float 7s var(--ease) infinite alternate}
+@keyframes birthday-card-float{to{transform:translateY(-10px) rotate(1deg)}}
+@media (hover:hover) and (pointer:fine){.statement:hover{background-color:rgba(255,255,255,.25)}.contact-panel:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(23,23,27,.12)}.birthday-card-showcase:hover{background-color:rgba(255,255,255,.25)}.birthday-card-showcase:hover .birthday-card-stage{box-shadow:0 20px 55px rgba(34,26,90,.08)}}
+@media(max-width:850px){.home-hero{grid-template-columns:1fr}.birthday-card-showcase{grid-template-columns:1fr}.birthday-card-stage{width:100%}}
+@media(max-width:580px){.home-hero h1{font-size:clamp(2.6rem,11vw,3.5rem)}}
+@media(prefers-reduced-motion:reduce){.birthday-card-image{animation-duration:.01ms!important;animation-iteration-count:1!important;transform:none!important}}
