@@ -44,3 +44,46 @@
 @media(max-width:850px){.home-hero{grid-template-columns:1fr}.birthday-card-showcase{grid-template-columns:1fr}.birthday-card-stage{width:100%}}
 @media(max-width:580px){.home-hero h1{font-size:clamp(2.6rem,11vw,3.5rem)}}
 @media(prefers-reduced-motion:reduce){.birthday-card-image{animation-duration:.01ms!important;animation-iteration-count:1!important;transform:none!important}.product-card:hover,.contact-panel:hover{transform:none!important}}
+
+/* Birthly benefits layout */
+.benefit-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);grid-template-rows:repeat(2,minmax(0,1fr));align-items:stretch;gap:1.25rem;height:100vh;min-height:100vh;overflow:hidden;padding-block:clamp(3.5rem,8vh,6rem)}
+.benefit-grid .benefit-reveal{min-width:0;height:100%}
+.benefit-grid .benefit-reveal:first-child{grid-row:1 / span 2}
+.benefit-grid .benefit-reveal:nth-child(2){grid-column:2;grid-row:1}
+.benefit-grid .benefit-reveal:nth-child(3){grid-column:2;grid-row:2}
+.benefit-grid .benefit-reveal article{display:flex;flex-direction:column;justify-content:flex-start;min-height:0;padding:clamp(1.75rem,3vw,3.25rem);border:1px solid rgba(141,72,90,.16);border-radius:var(--radius-lg);background:var(--birthday-surface);transition:transform .45s var(--ease),box-shadow .45s var(--ease),background-color .45s var(--ease)}
+.benefit-grid .benefit-reveal:first-child article{justify-content:space-between;background:var(--birthday-soft);border-color:transparent}
+.benefit-grid article .benefit-icon{color:var(--birthday);font-size:.72rem;letter-spacing:.14em}
+.benefit-grid article h2{max-width:10ch;margin:clamp(2.5rem,6vw,5rem) 0 1rem;font-size:clamp(1.9rem,3.5vw,3.8rem);line-height:1}
+.benefit-grid .benefit-reveal:not(:first-child) article h2{margin-top:clamp(2rem,3vw,3rem);font-size:clamp(1.7rem,2.5vw,2.6rem)}
+.benefit-grid article p{max-width:34ch;margin-bottom:0}
+@media (hover:hover) and (pointer:fine){.benefit-grid .benefit-reveal article:hover{transform:translateY(-5px);box-shadow:0 24px 55px rgba(141,72,90,.14)}.benefit-grid .benefit-reveal:first-child article:hover{background:#f9bcc3}}
+@media(max-width:850px){.benefit-grid{grid-template-columns:1fr;grid-template-rows:none;height:auto;min-height:auto;overflow:visible;padding-block:6rem}.benefit-grid .benefit-reveal,.benefit-grid .benefit-reveal:first-child,.benefit-grid .benefit-reveal:nth-child(2),.benefit-grid .benefit-reveal:nth-child(3){grid-column:auto;grid-row:auto;height:auto}.benefit-grid .benefit-reveal article{min-height:240px}}
+
+/* Birthly feature presentation */
+.birthday-card-showcase{display:block}
+.birthday-feature-showcase-content{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr);align-items:center;gap:clamp(2rem,6vw,6rem);width:100%;height:100%;min-height:0;padding-bottom:clamp(4.5rem,10vh,7rem)}
+.birthday-feature-copy{animation:birthday-feature-enter .55s var(--ease) both}
+.birthday-feature-copy h2{max-width:12ch;font-size:clamp(2.2rem,4vw,4rem)}
+.birthday-feature-copy>p:last-child{max-width:52ch;color:var(--muted);font-size:1.15rem;line-height:1.7}
+.birthday-feature-media{display:block;width:auto;height:calc(100vh - (2 * clamp(3rem,7vh,6rem)) - clamp(4.5rem,10vh,7rem) - (2 * clamp(1rem,2vw,2rem)));max-width:100%;max-height:100%;object-fit:contain;border-radius:var(--radius-sm);box-shadow:0 22px 55px rgba(34,26,90,.16);animation:birthday-feature-enter .55s var(--ease) both}
+.birthday-feature-video{aspect-ratio:384 / 832;margin-inline:auto;background:var(--ink);border-radius:var(--radius-lg)}
+.birthday-feature-media.birthday-card-image{animation:birthday-feature-enter .55s var(--ease) both,birthday-card-float 7s var(--ease) .55s infinite alternate}
+.birthday-card-stage{height:calc(100vh - (2 * clamp(3rem,7vh,6rem)) - clamp(4.5rem,10vh,7rem));min-height:0;padding:clamp(1rem,2vw,2rem);overflow:hidden;animation:birthday-feature-stage-drift 8s var(--ease) infinite alternate;user-select:none}
+.birthday-card-stage.is-paused{animation-play-state:paused}
+.birthday-feature-controller{grid-column:2;display:grid;gap:.8rem;margin-top:1.25rem}
+.birthday-feature-progress{height:4px;overflow:hidden;border-radius:999px;background:rgba(141,72,90,.18)}
+.birthday-feature-progress-fill{display:block;width:0;height:100%;border-radius:inherit;background:var(--birthday);transition:width .08s linear}
+@keyframes birthday-feature-enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes birthday-feature-stage-drift{from{transform:translateY(0) scale(1)}to{transform:translateY(-7px) scale(1.012)}}
+@media(max-width:850px){.birthday-feature-showcase-content{grid-template-columns:1fr;height:auto;padding-bottom:0}.birthday-feature-controller{grid-column:auto}.birthday-feature-media{width:100%;height:auto;max-height:100%}.birthday-feature-video{max-width:min(280px,75vw)}.birthday-card-stage{height:clamp(320px,58vh,480px);min-height:0}}
+@media(prefers-reduced-motion:reduce){.birthday-feature-copy,.birthday-feature-media,.birthday-feature-media.birthday-card-image,.birthday-card-stage{animation:none!important;transform:none!important}.birthday-feature-progress-fill{transition:none}}
+
+/* Full-screen presentation sections */
+html:has(.home-hero),html:has(.birthday-page){scroll-snap-type:y mandatory;scroll-padding-top:6.25rem}
+.home-hero,.statement,.products,.contact-panel,.birthday-page .hero,.birthday-page .section,.birthday-page .official-links{min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always}
+.birthday-card-showcase{position:relative;display:grid;grid-template-columns:1fr;align-items:center;height:100vh;min-height:100vh;overflow:hidden;padding-block:clamp(3rem,7vh,6rem)}
+.birthday-feature-controller{position:absolute;left:50%;bottom:clamp(2rem,5vw,5rem);width:100%;grid-column:auto;margin:0;transform:translateX(-50%)}
+@media(max-width:850px){.birthday-feature-controller{bottom:2rem;width:100%}}
+.birthday-page .official-links{min-height:0;align-items:center;padding:clamp(2rem,4vw,4rem)}
+@media(max-width:850px){.birthday-page .official-links{align-items:start;min-height:0}}

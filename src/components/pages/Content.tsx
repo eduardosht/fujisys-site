@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LegalLayout } from "../LegalLayout";
 import { LottiePlayer } from "../LottiePlayer";
 import { Reveal } from "../Reveal";
+import { BirthlyFeatureShowcase } from "../BirthlyFeatureShowcase";
 import { assetPath, INSTITUTIONAL_SITE, siteAssetPath } from "../../lib/site";
 import { BIRTHLY_PRODUCT, PRODUCT_CATALOG } from "../../products/catalog";
 
@@ -12,7 +13,7 @@ export function HomePage() {
     <section className="hero home-hero" aria-labelledby="home-title">
       <Reveal className="hero-copy layered-reveal">
         <p className="eyebrow">Estúdio de produtos digitais</p>
-        <h1 id="home-title">Eu crio ferramentas para lembrar, organizar e aproximar.</h1>
+        <h1 id="home-title">Criar ferramentas para lembrar, organizar e aproximar.</h1>
         <p className="lede">Transformo problemas do dia a dia em produtos digitais simples e cuidadosos.</p>
         <a className="text-link" href="#produtos">Conheça meus produtos <span aria-hidden="true">↓</span></a>
       </Reveal>
@@ -21,11 +22,11 @@ export function HomePage() {
 
     <Reveal delay={80}><section className="statement section" id="empresa">
       <p className="section-index">01 — Empresa</p>
-      <div><h2>Algumas ideias começam numa necessidade minha. Outras começam numa conversa.</h2><p>Escuto, experimento e crio soluções que tornam a vida um pouco mais leve.</p></div>
+      <div><h2>Algumas ideias começam numa necessidade. Outras começam numa conversa.</h2><p>Escuto, experimento e crio soluções que tornam a vida um pouco mais leve.</p></div>
     </section></Reveal>
 
     <Reveal delay={160}><section className="section products" id="produtos" aria-labelledby="products-title">
-      <header className="section-heading"><p className="section-index">02 — Produtos</p><h2 id="products-title">O primeiro produto que criei para estar por perto.</h2></header>
+      <header className="section-heading"><p className="section-index">02 — Produtos</p><h2 id="products-title">Dá uma olhada nas soluções.</h2></header>
       {PRODUCT_CATALOG.map((product) => <Link className="product-card" href={product.href} key={product.id}>
         <div className="birthday-product-art">
           <img className="birthday-logo" src={assetPath("/birthday/app-icon.png")} alt="" />
@@ -46,10 +47,7 @@ export function BirthdayPage() {
       <Reveal className="birthday-stage-reveal" delay={160}><div className="birthday-stage"><img className="birthday-hero-logo" src={assetPath("/birthday/app-icon.png")} alt="Ícone do aplicativo Birthly" /><LottiePlayer className="celebration-lottie" src={assetPath("/birthday/lotties/celebration.lottie")} /><span className="confetti c1" /><span className="confetti c2" /><span className="confetti c3" /></div></Reveal>
     </section>
     <Reveal><section className="birthday-statement section"><p className="section-index">Por que Birthly</p><h2>Lembrar também é uma forma de cuidar.</h2><p>O Birthly reúne o essencial em uma experiência tranquila, para que as datas que importam estejam sempre ao seu alcance.</p></section></Reveal>
-    <Reveal><section className="birthday-card-showcase section" aria-labelledby="birthday-card-title">
-      <div className="birthday-card-copy"><p className="section-index">Uma lembrança para compartilhar</p><h2 id="birthday-card-title">Cartões que guardam um momento.</h2><p>No Birthly, uma data também pode virar uma lembrança para compartilhar: escolha uma foto, escreva sua mensagem e assine do seu jeito.</p></div>
-      <div className="birthday-card-stage"><img className="birthday-card-image" src={assetPath("/birthday/examples/leandro-birthday-card.jpeg")} alt="Exemplo de cartão de aniversário do Birthly" /></div>
-    </section></Reveal>
+    <Reveal><section className="birthday-card-showcase section" aria-labelledby="birthday-card-title"><BirthlyFeatureShowcase /></section></Reveal>
     <section className="benefit-grid section" aria-label="Benefícios do Birthly">
       <Reveal className="benefit-reveal"><article><span className="benefit-icon">01</span><h2>Tudo em um só lugar</h2><p>Organize datas importantes sem complicação e encontre o que precisa com facilidade.</p></article></Reveal>
       <Reveal className="benefit-reveal" delay={120}><article><span className="benefit-icon">02</span><h2>Acesso simples</h2><p>Entre com sua conta usando seu e-mail e mantenha seu acesso de forma prática.</p></article></Reveal>
